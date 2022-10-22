@@ -1,0 +1,24 @@
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 390px !important;
+  margin: auto !important;
+  min-height: 100vh;
+  margin-bottom: 100px !important;
+  background-color: #fff;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.react-3d-carousel {
+  width: 100% !important;
+}
+
+.react-3d-carousel .slider-container .slider-content {
+  width: 85% !important;
+}
+
+.react-3d-carousel .slider-container .slider-content .slider-single .slider-single-content {
+  border-radius: 19px !important;
+}
