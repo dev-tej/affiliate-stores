@@ -1,5 +1,8 @@
 import React from "react";
-import HighlightStories from "../../components/HighlightStories";
+import {
+  ProductionHighlightStories,
+  DevelopmentHighlightStories,
+} from "../../components/HighlightStories";
 import { HighlightStoriesSection, HighlightStoryContainer } from "./components";
 
 const HIGHLIGHTS_STORIES = [
@@ -44,7 +47,11 @@ const HIGHLIGHTS_STORIES = [
 const Highlights = () => {
   return (
     <HighlightStoriesSection>
-      <HighlightStories highlights={HIGHLIGHTS_STORIES} />
+      {!process.env.NODE_ENV || process.env.NODE_ENV === "development" ? (
+        <DevelopmentHighlightStories highlights={HIGHLIGHTS_STORIES} />
+      ) : (
+        <ProductionHighlightStories highlights={HIGHLIGHTS_STORIES} />
+      )}
     </HighlightStoriesSection>
   );
 };
