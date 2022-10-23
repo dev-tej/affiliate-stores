@@ -40,8 +40,7 @@ export const InfluencerInfoContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  gap: 16px;
+  padding: 12px 12px 5px 12px !important;
   position: absolute;
   width: 330px;
   height: auto !important;

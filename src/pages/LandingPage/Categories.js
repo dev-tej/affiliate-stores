@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel } from "3d-react-carousal";
+import Carousel from "../../components/Carousel";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import {
   CategoriesInfoContainer,
@@ -38,14 +38,13 @@ const Categories = () => {
     <CategoriesInfoContainer>
       <CategoryHeader>Categories</CategoryHeader>
       <CarouselContainer>
-        <Carousel
-          slides={SLIDES}
-          autoplay={true}
-          interval={5000}
-          arrows={false}
-        />
+        <Carousel slides={SLIDES} />
       </CarouselContainer>
-      <AnnouncementBar header={"Use code AASHNA40 to get 40% OFF"} borderColor={"#C7232F"} color={"#C7232F"} />
+      <AnnouncementBar
+        header={"Use code AASHNA40 to get 40% OFF"}
+        borderColor={"#C7232F"}
+        color={"#C7232F"}
+      />
       <Products />
     </CategoriesInfoContainer>
   );
