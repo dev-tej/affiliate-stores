@@ -71,7 +71,7 @@ const BackgroundVideoSection = () => {
               </BrandInfoContainer>
               <div>
                 <i
-                  class="fas fa-angle-right"
+                  className="fas fa-angle-right"
                   style={{ color: "#000", marginRight: "10px" }}
                   onClick={() => setShowBrandBar(false)}
                 ></i>
@@ -87,7 +87,7 @@ const BackgroundVideoSection = () => {
               <CouponFlyoutInfoContainer>
                 <div>
                   <i
-                    class="fas fa-percentage"
+                    className="fas fa-percentage"
                     style={{ color: "#000", fontSize: "20px" }}
                   ></i>
                 </div>
@@ -100,7 +100,7 @@ const BackgroundVideoSection = () => {
               </CouponFlyoutInfoContainer>
               <div>
                 <i
-                  class="fas fa-angle-right"
+                  className="fas fa-angle-right"
                   style={{
                     color: "#000",
                     marginRight: "10px",
@@ -113,7 +113,7 @@ const BackgroundVideoSection = () => {
           ) : (
             <CouponFlyoutButton onClick={() => setShowCouponFlyout(true)}>
               <i
-                class="fas fa-percentage"
+                className="fas fa-percentage"
                 style={{ color: "#000", fontSize: "20px" }}
               ></i>
             </CouponFlyoutButton>
@@ -123,7 +123,7 @@ const BackgroundVideoSection = () => {
               <ShareUrlInfoContainer>
                 <div>
                   <i
-                    class="fas fa-share-alt"
+                    className="fas fa-share-alt"
                     style={{ color: "#000", fontSize: "20px" }}
                   ></i>
                 </div>
@@ -131,9 +131,6 @@ const BackgroundVideoSection = () => {
                   <BrandDescription>Share store with others</BrandDescription>
                 </div>
               </ShareUrlInfoContainer>
-              {/* <div>
-                <CopyUrlButton>Copy Url</CopyUrlButton>
-              </div> */}
               <div>
                 {buttonSelected ? (
                   <CopyUrlButtonSelected
@@ -149,7 +146,7 @@ const BackgroundVideoSection = () => {
               </div>
               <div>
                 <i
-                  class="fas fa-angle-right"
+                  className="fas fa-angle-right"
                   style={{
                     color: "#000",
                     marginRight: "10px",
@@ -162,7 +159,7 @@ const BackgroundVideoSection = () => {
           ) : (
             <ShareUrlButton onClick={() => setShowShareUrl(true)}>
               <i
-                class="fas fa-share-alt"
+                className="fas fa-share-alt"
                 style={{ color: "#000", fontSize: "20px" }}
               ></i>
             </ShareUrlButton>
@@ -179,7 +176,7 @@ const BackgroundVideoSection = () => {
           >
             <TapMoreText>Tap to shop</TapMoreText>
             <i
-              class="fas fa-angle-double-down"
+              className="fas fa-angle-double-down"
               style={{ color: "#fff", marginLeft: "25px", cursor: "pointer" }}
             ></i>
           </motion.div>

@@ -1,0 +1,70 @@
+.unSelected {
+  width: auto;
+  height: 28px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #000000;
+}
+
+.unSelected:focus {
+  transform: translateY(4px) !important;
+  box-shadow: 4px 4px 0px #000000;
+  background: #fff;
+  color: #000 !important;
+}
+
+.selected {
+  width: auto;
+  height: 28px;
+  background: #ff0000;
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff !important;
+}
+
+.selected:focus {
+  transform: translateY(4px) !important;
+  margin-top: -20px;
+  box-shadow: 4px 4px 0px #000000;
+  background: #ff0000;
+  color: #fff !important;
+}
+
+.Landing_customDots > li > button {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.Landing_customDots > .react-multi-carousel-dot--active > button {
+  background-color: #000;
+  border-color: #000;
+}
+
+.react-multi-carousel-dot-list {
+  margin-left: -280px !important;
+  margin-bottom: 5px !important;
+}
+
+.react-modal-sheet-container {
+  border-radius: 0px !important;
+}
