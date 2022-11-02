@@ -408,8 +408,11 @@ export const CategoryContainer = styled.div`
 
 export const ProductsDisplayContainer = styled.div`
   margin-top: 20px;
-  width: 100%;
+  width: 90%;
   height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   border: 1px solid #000;
   box-shadow: 8px 8px 0px #000000;
   margin-bottom: 54px;
@@ -496,7 +499,7 @@ export const ProductBuyNowButton = styled.button`
 `;
 
 export const ProductDetailsHeaderSection = styled.div`
-  width: 100%;
+  width: 90%;
   padding: 10px;
   display: flex;
   justify-content: space-between;
