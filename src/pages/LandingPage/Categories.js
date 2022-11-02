@@ -1,5 +1,5 @@
 import React from "react";
-import Carousel from "../../components/Carousel";
+import ReactCarousel from "../../components/ReactCarousel";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import {
   CategoriesInfoContainer,
@@ -38,7 +38,7 @@ const Categories = () => {
     <CategoriesInfoContainer>
       <CategoryHeader>Categories</CategoryHeader>
       <CarouselContainer>
-        <Carousel slides={SLIDES} />
+        <ReactCarousel slides={SLIDES} />
       </CarouselContainer>
       <AnnouncementBar
         header={"Use code AASHNA40 to get 40% OFF"}

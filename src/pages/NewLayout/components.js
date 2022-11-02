@@ -50,7 +50,7 @@ export const BannerContainer = styled.div`
   top: 0;
   width: 100%;
   max-width: 450px;
-  margin-top: 175px;
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,7 +83,7 @@ export const TopTicksText = styled.h1`
 `;
 
 export const SideBarContainer = styled.div`
-  margin-top: 300px;
+  margin-top: 150px;
   position: fixed;
   right: 0 !important;
   width: 100%;
@@ -408,14 +408,12 @@ export const CategoryContainer = styled.div`
 
 export const ProductsDisplayContainer = styled.div`
   margin-top: 20px;
-  width: 90%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   height: auto;
   border: 1px solid #000;
   box-shadow: 8px 8px 0px #000000;
   margin-bottom: 54px;
+  position: relative;
 `;
 
 export const ProductName = styled.h1`
@@ -437,6 +435,7 @@ export const ProductPriceContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding: 4px 10px;
   gap: 8px;
   position: absolute;
@@ -497,7 +496,7 @@ export const ProductBuyNowButton = styled.button`
 `;
 
 export const ProductDetailsHeaderSection = styled.div`
-  width: 90%;
+  width: 100%;
   padding: 10px;
   display: flex;
   justify-content: space-between;

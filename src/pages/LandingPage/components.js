@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const MainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const HighlightStoriesSection = styled.div`
   max-width: 390px;
   width: 100%;
@@ -9,6 +15,10 @@ export const HighlightStoriesSection = styled.div`
 
 export const HighlightStoryContainer = styled.div`
   width: 100%;
+  max-width: 390px !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   & img {
     width: 100% !important;
     height: 100% !important;
@@ -18,6 +28,8 @@ export const HighlightStoryContainer = styled.div`
 export const ProductInfoContainer = styled.div`
   margin-top: 354px;
   isolation: isolate;
+  width: 100%;
+  max-width: 390px !important;
 `;
 
 export const HeaderInfoContainer = styled.div`
@@ -28,6 +40,7 @@ export const HeaderInfoContainer = styled.div`
   gap: 25px;
   isolation: isolate;
   width: 100%;
+  max-width: 450px !important;
   height: 50px !important;
   background: #ffffff;
   border: 1px solid #c7c7c7;
