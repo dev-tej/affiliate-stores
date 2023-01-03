@@ -11,7 +11,7 @@ export const ProductionHighlightStories = (props) => {
         keyboardNavigation
         stories={highlights}
         width={"100%"}
-        height={"375.26px"}
+        height={"400px"}
       />
     </div>
   );
@@ -29,7 +29,7 @@ export const DevelopmentHighlightStories = (props) => {
         keyboardNavigation
         stories={highlights}
         width={"100%"}
-        height={"375.26px"}
+        height={"400px"}
         onStoryEnd={(s, st) => {
           setCurrentId((currentId) => currentId + 1);
         }}

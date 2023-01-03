@@ -234,7 +234,6 @@ export const CopyUrlButton = styled.button`
   text-align: center;
   cursor: pointer;
   outline: none;
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -258,7 +257,6 @@ export const CopyUrlButtonSelected = styled.button`
   text-align: center;
   cursor: pointer;
   outline: none;
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -287,7 +285,6 @@ export const TapMoreContainer = styled.div`
 `;
 
 export const TapMoreText = styled.h1`
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 700 !important;
   font-size: 12px;
@@ -329,7 +326,6 @@ export const InfluencerDp = styled.img`
 `;
 
 export const InfluencerName = styled.h1`
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -338,7 +334,6 @@ export const InfluencerName = styled.h1`
 `;
 
 export const InfluencerDescription = styled.h1`
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -420,7 +415,6 @@ export const ProductsDisplayContainer = styled.div`
 `;
 
 export const ProductName = styled.h1`
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -507,7 +501,6 @@ export const ProductDetailsHeaderSection = styled.div`
 `;
 
 export const ProductDetailsProductName = styled.h1`
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -570,7 +563,6 @@ export const ProductDetailsImagesContainer = styled.div`
 `;
 
 export const ProductDetailsSizeHeader = styled.h1`
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
@@ -597,7 +589,6 @@ export const ProductDetailsSizeContainer = styled.div`
     width: auto;
     height: 26px;
     border: 1px solid #000000;
-    font-family: "Raleway";
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -618,7 +609,6 @@ export const ProductDetailsBuyNowButton = styled.button`
   height: 39px;
   background: #ff9900;
   border: 2px solid #000000;
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;

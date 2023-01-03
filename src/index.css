@@ -7,10 +7,10 @@ body {
   min-height: 100vh;
   margin-bottom: 100px !important;
   background-color: #fff;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Quicksand", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 .react-3d-carousel {
@@ -21,6 +21,10 @@ body {
   width: 85% !important;
 }
 
-.react-3d-carousel .slider-container .slider-content .slider-single .slider-single-content {
+.react-3d-carousel
+  .slider-container
+  .slider-content
+  .slider-single
+  .slider-single-content {
   border-radius: 19px !important;
 }

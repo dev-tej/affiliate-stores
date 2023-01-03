@@ -1,0 +1,19 @@
+.Posts_customDots > li > button {
+  background-color: #616e7c !important;
+  border-color: #616e7c !important;
+  border: none !important;
+}
+
+.Posts_customDots > .react-multi-carousel-dot--active > button {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  border: none !important;
+}
+
+.Posts_customDots > .react-multi-carousel-dot {
+  margin-top: 100px !important;
+}
+
+.react-multi-carousel-track {
+  margin-bottom: 20px !important;
+}

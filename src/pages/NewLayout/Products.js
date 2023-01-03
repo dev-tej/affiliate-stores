@@ -79,14 +79,17 @@ const Products = () => {
           neckline. Long sleeve. Button fastening on the front section...
           <strong>Read more</strong>
         </ProductDescription>
-        <ProductBuyNowButton onClick={() => setOpen(true)}>
+        <ProductBuyNowButton
+          // id="product-component-1672734903841"
+          onClick={() => setOpen(true)}
+        >
           BUY NOW
         </ProductBuyNowButton>
       </ProductsDisplayContainer>
       <ProductsDisplayContainer>
         <ProductName>Checked Cotton Shirt</ProductName>
         <hr />
-        <Carousel
+        {/* <Carousel
           showDots
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
@@ -104,7 +107,7 @@ const Products = () => {
           <div>
             <ProductImage src={Product3} />
           </div>
-        </Carousel>
+        </Carousel> */}
         <ProductPriceContainer>
           <h1>&#8377;120</h1>
           <h2>&#8377;120</h2>

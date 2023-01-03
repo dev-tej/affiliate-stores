@@ -8,7 +8,6 @@
   text-align: center;
   cursor: pointer;
   outline: none;
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -33,7 +32,6 @@
   text-align: center;
   cursor: pointer;
   outline: none;
-  font-family: "Raleway";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -60,11 +58,12 @@
   border-color: #000;
 }
 
-.react-multi-carousel-dot-list {
+.Landing_customDots > .react-multi-carousel-dot-list {
   margin-left: -280px !important;
   margin-bottom: 5px !important;
 }
 
 .react-modal-sheet-container {
   border-radius: 0px !important;
+  /* height: 100vh !important; */
 }
