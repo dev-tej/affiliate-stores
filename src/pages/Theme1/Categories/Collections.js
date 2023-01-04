@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   CollectionContainer,
   CollectionProductBuyNowButton,
@@ -24,10 +24,10 @@ import {
   SheetProductDisplay,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
-import ShopifyBuy from "@shopify/buy-button-js";
 import Product1 from "../../../assets/NewLayout/Product1.svg";
 import Product2 from "../../../assets/NewLayout/Product2.svg";
 import Product3 from "../../../assets/NewLayout/Product3.svg";
+import Client from "shopify-buy";
 
 const COLLECTION_DATA = [
   {
@@ -156,26 +156,39 @@ const COLLECTION_DATA = [
 ];
 
 const Collections = () => {
-  const shopifyClient = ShopifyBuy.buildClient({
+  // Initializing a client to return content in the store's primary language
+  const client = Client.buildClient({
     domain: "galleri5.myshopify.com",
     storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
   });
 
-  const ui = ShopifyBuy.UI.init(shopifyClient);
-
-  const BuyNow = ({ id }) => {
-    useEffect(() => {
-      ui?.createComponent("product", {
-        id,
-        node: document?.getElementById(`buy-now-${id}`),
+  const handleChekcout = () => {
+    client.checkout.create().then((checkout) => {
+      // Do something with the checkout
+      console.log(checkout, "Checkout");
+      const checkoutID = checkout?.id;
+      console.log(checkoutID, "CID");
+      const productId = "gid://shopify/Product/8069698126116";
+      // Fetch Product Data
+      client.product.fetch(productId).then((product) => {
+        // Do something with the product
+        console.log(product, "Product");
+        const lineItemsToAdd = [
+          {
+            variantId: product?.variants?.[0]?.id,
+            quantity: 1,
+            customAttributes: [],
+          },
+        ];
+        // Add an item to the checkout
+        client.checkout
+          .addLineItems(checkoutID, lineItemsToAdd)
+          .then((checkout) => {
+            // Do something with the updated checkout
+            console.log(checkout.lineItems, "Line Items"); // Array with one additional line item
+          });
       });
-      console.log(ui, "ui");
-    }, [id]);
-    return (
-      <BuyNowButton id={`buy-now-${id}`}>
-        <p>BUY NOW</p>
-      </BuyNowButton>
-    );
+    });
   };
 
   const CollectionDisplay = ({ collections }) => {
@@ -286,10 +299,9 @@ const Collections = () => {
                   <AddToBagButton>
                     <p>ADD TO BAG</p>
                   </AddToBagButton>
-                  <BuyNow id={"6625402912953"} />
-                  {/* <BuyNowButton>
+                  <BuyNowButton onClick={() => handleChekcout()}>
                     <p>BUY NOW</p>
-                  </BuyNowButton> */}
+                  </BuyNowButton>
                 </ButtonsContainer>
               </ProductDetailsInfoSection>
             </SheetProductDisplay>
@@ -298,6 +310,7 @@ const Collections = () => {
       </div>
     );
   };
+
   return (
     <CollectionContainer>
       <CollectionDisplay collections={COLLECTION_DATA} />
