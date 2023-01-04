@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CollectionContainer,
   CollectionProductBuyNowButton,
@@ -24,6 +24,7 @@ import {
   SheetProductDisplay,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
+import ShopifyBuy from "@shopify/buy-button-js";
 import Product1 from "../../../assets/NewLayout/Product1.svg";
 import Product2 from "../../../assets/NewLayout/Product2.svg";
 import Product3 from "../../../assets/NewLayout/Product3.svg";
@@ -155,186 +156,28 @@ const COLLECTION_DATA = [
 ];
 
 const Collections = () => {
-  // var scriptURL =
-  //   "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+  const shopifyClient = ShopifyBuy.buildClient({
+    domain: "galleri5.myshopify.com",
+    storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
+  });
 
-  // if (window.ShopifyBuy) {
-  //   if (window.ShopifyBuy.UI) {
-  //     ShopifyBuyInit();
-  //   } else {
-  //     loadScript();
-  //   }
-  // } else {
-  //   loadScript();
-  // }
+  const ui = ShopifyBuy.UI.init(shopifyClient);
 
-  // function loadScript() {
-  //   var script = document.createElement("script");
-  //   script.async = true;
-  //   script.src = scriptURL;
-  //   (
-  //     document.getElementsByTagName("head")[0] ||
-  //     document.getElementsByTagName("body")[0]
-  //   ).appendChild(script);
-  //   script.onload = ShopifyBuyInit;
-  // }
+  const BuyNow = ({ id }) => {
+    useEffect(() => {
+      ui?.createComponent("product", {
+        id,
+        node: document?.getElementById(`buy-now-${id}`),
+      });
+      console.log(ui, "ui");
+    }, [id]);
+    return (
+      <BuyNowButton id={`buy-now-${id}`}>
+        <p>BUY NOW</p>
+      </BuyNowButton>
+    );
+  };
 
-  // function ShopifyBuyInit() {
-  //   var client = window.ShopifyBuy.buildClient({
-  //     domain: "galleri5.myshopify.com",
-  //     storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
-  //   });
-  //   window.ShopifyBuy.UI.onReady(client).then(function (ui) {
-  //     ui.createComponent("product", {
-  //       id: "8069698126116",
-  //       node: document.getElementById("product-component-1672738746186"),
-  //       moneyFormat: "Rs.%20%7B%7Bamount%7D%7D",
-  //       // options: {
-  //       //   product: {
-  //       //     styles: {
-  //       //       product: {
-  //       //         "@media (min-width: 601px)": {
-  //       //           "max-width": "calc(25% - 20px)",
-  //       //           "margin-left": "20px",
-  //       //           "margin-bottom": "50px",
-  //       //         },
-  //       //       },
-  //       //       button: {
-  //       //         "font-family": "Crimson Text, serif",
-  //       //         color: "#000000",
-  //       //         ":hover": {
-  //       //           color: "#000000",
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         "background-color": "#fac912",
-  //       //         ":focus": {
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         "border-radius": "40px",
-  //       //       },
-  //       //     },
-  //       //     buttonDestination: "checkout",
-  //       //     text: {
-  //       //       button: "Buy now",
-  //       //     },
-  //       //     googleFonts: ["Crimson Text"],
-  //       //   },
-  //       //   productSet: {
-  //       //     styles: {
-  //       //       products: {
-  //       //         "@media (min-width: 601px)": {
-  //       //           "margin-left": "-20px",
-  //       //         },
-  //       //       },
-  //       //     },
-  //       //   },
-  //       //   modalProduct: {
-  //       //     contents: {
-  //       //       img: false,
-  //       //       imgWithCarousel: true,
-  //       //     },
-  //       //     styles: {
-  //       //       product: {
-  //       //         "@media (min-width: 601px)": {
-  //       //           "max-width": "100%",
-  //       //           "margin-left": "0px",
-  //       //           "margin-bottom": "0px",
-  //       //         },
-  //       //       },
-  //       //       button: {
-  //       //         "font-family": "Crimson Text, serif",
-  //       //         color: "#000000",
-  //       //         ":hover": {
-  //       //           color: "#000000",
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         "background-color": "#fac912",
-  //       //         ":focus": {
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         "border-radius": "40px",
-  //       //       },
-  //       //     },
-  //       //     googleFonts: ["Crimson Text"],
-  //       //     text: {
-  //       //       button: "Add to cart",
-  //       //     },
-  //       //   },
-  //       //   option: {},
-  //       //   cart: {
-  //       //     styles: {
-  //       //       button: {
-  //       //         "font-family": "Crimson Text, serif",
-  //       //         color: "#000000",
-  //       //         ":hover": {
-  //       //           color: "#000000",
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         "background-color": "#fac912",
-  //       //         ":focus": {
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         "border-radius": "40px",
-  //       //       },
-  //       //     },
-  //       //     text: {
-  //       //       total: "Subtotal",
-  //       //       button: "Checkout",
-  //       //     },
-  //       //     popup: false,
-  //       //     googleFonts: ["Crimson Text"],
-  //       //   },
-  //       //   toggle: {
-  //       //     styles: {
-  //       //       toggle: {
-  //       //         "font-family": "Crimson Text, serif",
-  //       //         "background-color": "#fac912",
-  //       //         ":hover": {
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //         ":focus": {
-  //       //           "background-color": "#e1b510",
-  //       //         },
-  //       //       },
-  //       //       count: {
-  //       //         color: "#000000",
-  //       //         ":hover": {
-  //       //           color: "#000000",
-  //       //         },
-  //       //       },
-  //       //       iconPath: {
-  //       //         fill: "#000000",
-  //       //       },
-  //       //     },
-  //       //     googleFonts: ["Crimson Text"],
-  //       //   },
-  //       // },
-  //       cart: {
-  //         styles: {
-  //           button: {
-  //             "font-family": "Crimson Text, serif",
-  //             color: "#000000",
-  //             ":hover": {
-  //               color: "#000000",
-  //               "background-color": "#e1b510",
-  //             },
-  //             "background-color": "#fac912",
-  //             ":focus": {
-  //               "background-color": "#e1b510",
-  //             },
-  //             "border-radius": "40px",
-  //           },
-  //         },
-  //         text: {
-  //           total: "Subtotal",
-  //           button: "Checkout",
-  //         },
-  //         popup: false,
-  //         googleFonts: ["Crimson Text"],
-  //       },
-  //     });
-  //   });
-  // }
   const CollectionDisplay = ({ collections }) => {
     const [open, setOpen] = useState(false);
     return (
@@ -443,9 +286,10 @@ const Collections = () => {
                   <AddToBagButton>
                     <p>ADD TO BAG</p>
                   </AddToBagButton>
-                  <BuyNowButton>
+                  <BuyNow id={"6625402912953"} />
+                  {/* <BuyNowButton>
                     <p>BUY NOW</p>
-                  </BuyNowButton>
+                  </BuyNowButton> */}
                 </ButtonsContainer>
               </ProductDetailsInfoSection>
             </SheetProductDisplay>

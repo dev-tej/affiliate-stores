@@ -44,13 +44,13 @@ const FEED_DATA = [
     content: [
       {
         thumbnail:
-          "https://scontent.cdninstagram.com/v/t51.2885-15/318306971_209977388093861_9038554857697577459_n.jpg?stp=dst-jpg_e35_p480x480&_nc_ht=scontent.cdninstagram.com&_nc_cat=105&_nc_ohc=fCINWln0k14AX9TPLqL&edm=AMO9-JQAAAAA&ccb=7-5&oh=00_AfCSUDTZKa6PWL0ZlygF0aUdZmtDtDYiJNNE5NF7F2jpng&oe=63B43390&_nc_sid=b9f2ee",
+          "https://assets.myntassets.com/assets/images/2022/2/25/9f1fbb0b-3e5b-4c03-903c-201f20569e0b1645783766518-995EF721-F92D-4841-B715-B084936CFE84.jpeg",
         url: "https://www.instagram.com/p/Cl4HGpDhwom/",
         type: "image",
       },
       {
         thumbnail:
-          "https://scontent.cdninstagram.com/v/t51.2885-15/318376449_511898034328820_3555535745463341896_n.jpg?stp=dst-jpg_e15_p640x640&_nc_ht=scontent.cdninstagram.com&_nc_cat=108&_nc_ohc=gDa-SbWu54gAX9YDUCp&edm=AMO9-JQAAAAA&ccb=7-5&oh=00_AfBIHOORkJsBaHR8P6oyBafIDLJdiwGSv_lJ0oZ1sAatOg&oe=63B42FE5&_nc_sid=b9f2ee",
+          "https://assets.myntassets.com/assets/images/2022/3/30/0c324e43-5a52-4a1c-be4a-fad3cd0a17a41648627295819-42B707B9-9135-406D-BFCF-BA48BE2DBD57.jpeg",
         url: "https://www.instagram.com/p/Cl4HGpDhwom/",
         type: "image",
       },
@@ -114,13 +114,13 @@ const FEED_DATA = [
     content: [
       {
         thumbnail:
-          "https://scontent.cdninstagram.com/v/t51.2885-15/318306971_209977388093861_9038554857697577459_n.jpg?stp=dst-jpg_e35_p480x480&_nc_ht=scontent.cdninstagram.com&_nc_cat=105&_nc_ohc=fCINWln0k14AX9TPLqL&edm=AMO9-JQAAAAA&ccb=7-5&oh=00_AfCSUDTZKa6PWL0ZlygF0aUdZmtDtDYiJNNE5NF7F2jpng&oe=63B43390&_nc_sid=b9f2ee",
+          "https://assets.myntassets.com/assets/images/2022/4/18/6a721a34-3cad-408b-833d-f9b1c3e87f221650297562765-FCEA3C01-3003-4816-AD54-C5739DF57AD4.jpeg",
         url: "https://www.instagram.com/p/Cl4HGpDhwom/",
         type: "image",
       },
       {
         thumbnail:
-          "https://scontent.cdninstagram.com/v/t51.2885-15/318376449_511898034328820_3555535745463341896_n.jpg?stp=dst-jpg_e15_p640x640&_nc_ht=scontent.cdninstagram.com&_nc_cat=108&_nc_ohc=gDa-SbWu54gAX9YDUCp&edm=AMO9-JQAAAAA&ccb=7-5&oh=00_AfBIHOORkJsBaHR8P6oyBafIDLJdiwGSv_lJ0oZ1sAatOg&oe=63B42FE5&_nc_sid=b9f2ee",
+          "https://assets.myntassets.com/assets/images/2022/2/15/33032a80-4008-4243-bc17-830583854a761644915367149-BCFE353E-10DD-4ADD-AE40-485F29080605.jpeg",
         url: "https://www.instagram.com/p/Cl4HGpDhwom/",
         type: "image",
       },

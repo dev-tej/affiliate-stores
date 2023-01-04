@@ -21,10 +21,12 @@ const HIGHLIGHTS_STORIES = [
     content: () => {
       return (
         <ThemeHighlightStoryContainer>
-          <img
-            src="https://gallerify.s3-us-west-2.amazonaws.com/instaphosts/17923443460871228.jpg"
-            alt="img"
-          />
+          <ThemeHighlightVideoDisplay controls autoPlay>
+            <source
+              src="https://gallerify.s3.us-west-2.amazonaws.com/stores/video/story.mp4"
+              type="video/mp4"
+            />
+          </ThemeHighlightVideoDisplay>
         </ThemeHighlightStoryContainer>
       );
     },
@@ -33,16 +35,10 @@ const HIGHLIGHTS_STORIES = [
     content: () => {
       return (
         <ThemeHighlightStoryContainer>
-          {/* <img
+          <img
             src="https://gallerify.s3-us-west-2.amazonaws.com/instaphosts/18046848607307716.jpg"
             alt="img"
-          /> */}
-          <ThemeHighlightVideoDisplay controls autoPlay muted>
-            <source
-              src="https://gallerify.s3-us-west-2.amazonaws.com/instashtories/2988405713754036044.mp4"
-              type="video/mp4"
-            />
-          </ThemeHighlightVideoDisplay>
+          />
         </ThemeHighlightStoryContainer>
       );
     },

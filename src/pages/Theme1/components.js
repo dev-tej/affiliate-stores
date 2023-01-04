@@ -27,7 +27,6 @@ export const ThemeHighlightStoryContainer = styled.div`
   & img {
     width: 100% !important;
     height: 100% !important;
-    opacity: 0.4;
   }
 `;
 
@@ -50,6 +49,7 @@ export const InfluencerInfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  background: rgba(0, 0, 0, 0.5);
   @media (min-width: 650px) {
     width: 23%;
   }
