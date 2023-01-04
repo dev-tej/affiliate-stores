@@ -155,6 +155,11 @@ const COLLECTION_DATA = [
   },
 ];
 
+const SELECTED_PRODUCT_DATA = {
+  title: "Checked Cotton Shirt",
+  imageURLs: [Product1, Product2, Product3],
+};
+
 const Collections = () => {
   // Initializing a client to return content in the store's primary language
   const client = Client.buildClient({

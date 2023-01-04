@@ -42,17 +42,13 @@ export const ThemeHighlightVideoDisplay = styled.video`
 
 export const InfluencerInfoContainer = styled.div`
   position: absolute;
-  margin-top: -130px;
-  width: 90%;
-  padding: 19px;
+  margin-top: -94px;
+  width: 100%;
   max-width: 480px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-end;
   background: rgba(0, 0, 0, 0.5);
-  @media (min-width: 650px) {
-    width: 23%;
-  }
 `;
 
 export const InfluencerName = styled.h1`
