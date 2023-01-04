@@ -22,8 +22,12 @@ import {
   AddToBagButton,
   BuyNowButton,
   SheetProductDisplay,
+  QuantityContainer,
+  QuantityValue,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
+import SideBar from "../../../components/SideBar";
+import Spinner from "../../../components/Spinner/Spinner";
 import Product1 from "../../../assets/NewLayout/Product1.svg";
 import Product2 from "../../../assets/NewLayout/Product2.svg";
 import Product3 from "../../../assets/NewLayout/Product3.svg";
@@ -158,6 +162,10 @@ const COLLECTION_DATA = [
 const SELECTED_PRODUCT_DATA = {
   title: "Checked Cotton Shirt",
   imageURLs: [Product1, Product2, Product3],
+  description:
+    "100% Cotton. Available in plain or floral print. Straight design. Mao neckline. Long sleeve. Button fastening on the front section",
+  size: ["XS", "S", "M", "L"],
+  color: ["Blue", "White", "Green", "Yellow"],
 };
 
 const Collections = () => {
@@ -167,37 +175,82 @@ const Collections = () => {
     storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
   });
 
-  const handleChekcout = () => {
-    client.checkout.create().then((checkout) => {
-      // Do something with the checkout
-      console.log(checkout, "Checkout");
-      const checkoutID = checkout?.id;
-      console.log(checkoutID, "CID");
-      const productId = "gid://shopify/Product/8069698126116";
-      // Fetch Product Data
-      client.product.fetch(productId).then((product) => {
-        // Do something with the product
-        console.log(product, "Product");
-        const lineItemsToAdd = [
-          {
-            variantId: product?.variants?.[0]?.id,
-            quantity: 1,
-            customAttributes: [],
-          },
-        ];
-        // Add an item to the checkout
-        client.checkout
-          .addLineItems(checkoutID, lineItemsToAdd)
-          .then((checkout) => {
-            // Do something with the updated checkout
-            console.log(checkout.lineItems, "Line Items"); // Array with one additional line item
-          });
-      });
-    });
-  };
+  const [loading, setLoading] = useState(false);
 
   const CollectionDisplay = ({ collections }) => {
     const [open, setOpen] = useState(false);
+    const [quantity, setQuantity] = useState(0);
+    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedColor, setSelectedColor] = useState("");
+
+    const handleSizeChange = (val) => {
+      setSelectedSize(val);
+    };
+
+    const handleColorChange = (val) => {
+      setSelectedColor(val);
+    };
+
+    function previousQuantity() {
+      setQuantity((prevPage) => prevPage - 1);
+    }
+
+    function nextQuantity() {
+      setQuantity((prevPage) => prevPage + 1);
+    }
+
+    const handleChekcout = () => {
+      client.checkout.create().then((checkout) => {
+        // Do something with the checkout
+        console.log(checkout, "Checkout");
+        const checkoutID = checkout?.id;
+        console.log(checkoutID, "CID");
+        const productId = "gid://shopify/Product/8069698126116";
+        // Fetch Product Data
+        client.product.fetch(productId).then((product) => {
+          // Do something with the product
+          console.log(product, "Product");
+          const lineItemsToAdd = [
+            {
+              variantId: product?.variants?.[0]?.id,
+              quantity: 1,
+              customAttributes: [],
+            },
+          ];
+          // Add an item to the checkout
+          client.checkout
+            .addLineItems(checkoutID, lineItemsToAdd)
+            .then((checkout) => {
+              // Do something with the updated checkout
+              console.log(checkout.lineItems, "Line Items"); // Array with one additional line item
+            });
+        });
+      });
+    };
+
+    const handleBuyNow = () => {
+      setLoading(true);
+      client.checkout.create().then((checkout) => {
+        const checkoutID = checkout?.id;
+        const productId = "gid://shopify/Product/8069698126116";
+        client.product.fetch(productId).then((product) => {
+          const lineItemsToAdd = [
+            {
+              variantId: product?.variants?.[0]?.id,
+              quantity: quantity,
+              customAttributes: [],
+            },
+          ];
+          client.checkout
+            .addLineItems(checkoutID, lineItemsToAdd)
+            .then((checkout) => {
+              window.open(checkout?.webUrl);
+            });
+        });
+      });
+      setLoading(false);
+    };
+
     return (
       <div>
         {collections?.map((collection, index) => {
@@ -252,7 +305,7 @@ const Collections = () => {
               <ProductDetailsHeaderSection>
                 <div>
                   <ProductDetailsProductName>
-                    Checked Cotton Shirt
+                    {SELECTED_PRODUCT_DATA?.title}
                   </ProductDetailsProductName>
                 </div>
                 <div onClick={() => setOpen(false)}>
@@ -263,34 +316,74 @@ const Collections = () => {
                 </div>
               </ProductDetailsHeaderSection>
               <ProductDetailsInfoSection>
-                <ProductDetailsImage src={Product1} />
+                <ProductDetailsImage
+                  src={SELECTED_PRODUCT_DATA?.imageURLs?.[0]}
+                />
                 <ProductDetailsImagesContainer>
-                  <img src={Product1} alt="" />
-                  <img src={Product2} alt="" />
-                  <img src={Product3} alt="" />
+                  {SELECTED_PRODUCT_DATA?.imageURLs?.map((img, index) => {
+                    return <img src={img} alt="img" key={index} />;
+                  })}
                 </ProductDetailsImagesContainer>
                 <ProductDescription>
-                  100% Cotton. Available in plain or floral print. Straight
-                  design. Mao neckline. Long sleeve. Button fastening on the
-                  front section...
-                  <strong>Read more</strong>
+                  {SELECTED_PRODUCT_DATA?.description}
+                  {/* <strong>Read more</strong> */}
                 </ProductDescription>
                 <div style={{ marginTop: "12px" }}>
+                  <ProductDetailsSizeHeader>Quantity</ProductDetailsSizeHeader>
+                  <QuantityContainer>
+                    {quantity <= 0 ? (
+                      <button>
+                        <p>-</p>
+                      </button>
+                    ) : (
+                      <button onClick={previousQuantity}>
+                        <p>-</p>
+                      </button>
+                    )}
+                    <QuantityValue>{quantity}</QuantityValue>
+                    <button onClick={nextQuantity}>
+                      <p>+</p>
+                    </button>
+                  </QuantityContainer>
+                </div>
+                <div>
                   <ProductDetailsSizeHeader>Size</ProductDetailsSizeHeader>
                   <ProductDetailsSizeContainer>
-                    <button>XS</button>
-                    <button>S</button>
-                    <button>M</button>
-                    <button>L</button>
+                    {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
+                      return (
+                        <button
+                          key={index}
+                          className={
+                            selectedSize === size
+                              ? "selectedContainer"
+                              : "defaultContainer"
+                          }
+                          onClick={() => handleSizeChange(size)}
+                        >
+                          <p>{size}</p>
+                        </button>
+                      );
+                    })}
                   </ProductDetailsSizeContainer>
                 </div>
                 <div style={{ marginTop: "12px", marginBottom: "30px" }}>
                   <ProductDetailsSizeHeader>Color</ProductDetailsSizeHeader>
                   <ProductDetailsSizeContainer>
-                    <button>Blue</button>
-                    <button>White</button>
-                    <button>Red</button>
-                    <button>Green</button>
+                    {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
+                      return (
+                        <button
+                          key={index}
+                          className={
+                            selectedColor === color
+                              ? "selectedContainer"
+                              : "defaultContainer"
+                          }
+                          onClick={() => handleColorChange(color)}
+                        >
+                          {color}
+                        </button>
+                      );
+                    })}
                   </ProductDetailsSizeContainer>
                 </div>
                 <hr
@@ -304,7 +397,7 @@ const Collections = () => {
                   <AddToBagButton>
                     <p>ADD TO BAG</p>
                   </AddToBagButton>
-                  <BuyNowButton onClick={() => handleChekcout()}>
+                  <BuyNowButton onClick={() => handleBuyNow()}>
                     <p>BUY NOW</p>
                   </BuyNowButton>
                 </ButtonsContainer>
@@ -316,9 +409,12 @@ const Collections = () => {
     );
   };
 
-  return (
+  return loading ? (
+    <Spinner loading={loading} />
+  ) : (
     <CollectionContainer>
       <CollectionDisplay collections={COLLECTION_DATA} />
+      <SideBar />
     </CollectionContainer>
   );
 };

@@ -270,3 +270,41 @@ export const SheetProductDisplay = styled.div`
     display: none;
   }
 `;
+
+export const QuantityContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 10px;
+  margin-top: -10px;
+  margin-left: 10px;
+
+  & button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    gap: 10px;
+    width: 27px;
+    height: 26px;
+    border: 1px solid #8c8888;
+    border-radius: 6px;
+
+    & p {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 9px;
+      color: #8c8888;
+    }
+  }
+`;
+
+export const QuantityValue = styled.h1`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #ffc323;
+`;
