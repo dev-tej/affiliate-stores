@@ -13,7 +13,7 @@ import {
   ProductDetailsImage,
   ProductDetailsImagesContainer,
   ProductDetailsInfoSection,
-  // ProductDetailsPriceContainer,
+  ProductDetailsPriceContainer,
   ProductDetailsProductName,
   ProductDetailsSizeContainer,
   ProductDetailsSizeHeader,
@@ -166,6 +166,8 @@ const SELECTED_PRODUCT_DATA = {
     "100% Cotton. Available in plain or floral print. Straight design. Mao neckline. Long sleeve. Button fastening on the front section",
   size: ["XS", "S", "M", "L"],
   color: ["Blue", "White", "Green", "Yellow"],
+  originalPrice: "240",
+  mrp: "200",
 };
 
 const Collections = () => {
@@ -176,84 +178,98 @@ const Collections = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
 
-  const CollectionDisplay = ({ collections }) => {
-    const [open, setOpen] = useState(false);
-    const [quantity, setQuantity] = useState(0);
-    const [selectedSize, setSelectedSize] = useState("");
-    const [selectedColor, setSelectedColor] = useState("");
+  const handleCloseSheet = () => {
+    setOpen(false);
+    setQuantity(1);
+    setSelectedSize("");
+    setSelectedColor("");
+  };
 
-    const handleSizeChange = (val) => {
-      setSelectedSize(val);
-    };
+  const handleSizeChange = (val) => {
+    setSelectedSize(val);
+  };
 
-    const handleColorChange = (val) => {
-      setSelectedColor(val);
-    };
+  const handleColorChange = (val) => {
+    setSelectedColor(val);
+  };
 
-    function previousQuantity() {
-      setQuantity((prevPage) => prevPage - 1);
-    }
+  function previousQuantity() {
+    setQuantity((prevPage) => prevPage - 1);
+  }
 
-    function nextQuantity() {
-      setQuantity((prevPage) => prevPage + 1);
-    }
+  function nextQuantity() {
+    setQuantity((prevPage) => prevPage + 1);
+  }
 
-    const handleChekcout = () => {
-      client.checkout.create().then((checkout) => {
-        // Do something with the checkout
-        console.log(checkout, "Checkout");
-        const checkoutID = checkout?.id;
-        console.log(checkoutID, "CID");
-        const productId = "gid://shopify/Product/8069698126116";
-        // Fetch Product Data
-        client.product.fetch(productId).then((product) => {
-          // Do something with the product
-          console.log(product, "Product");
-          const lineItemsToAdd = [
-            {
-              variantId: product?.variants?.[0]?.id,
-              quantity: 1,
-              customAttributes: [],
-            },
-          ];
-          // Add an item to the checkout
-          client.checkout
-            .addLineItems(checkoutID, lineItemsToAdd)
-            .then((checkout) => {
-              // Do something with the updated checkout
-              console.log(checkout.lineItems, "Line Items"); // Array with one additional line item
-            });
-        });
+  const handleChekcout = () => {
+    client.checkout.create().then((checkout) => {
+      // Do something with the checkout
+      console.log(checkout, "Checkout");
+      const checkoutID = checkout?.id;
+      console.log(checkoutID, "CID");
+      const productId = "gid://shopify/Product/8069698126116";
+      // Fetch Product Data
+      client.product.fetch(productId).then((product) => {
+        // Do something with the product
+        console.log(product, "Product");
+        const lineItemsToAdd = [
+          {
+            variantId: product?.variants?.[0]?.id,
+            quantity: 1,
+            customAttributes: [],
+          },
+        ];
+        // Add an item to the checkout
+        client.checkout
+          .addLineItems(checkoutID, lineItemsToAdd)
+          .then((checkout) => {
+            // Do something with the updated checkout
+            console.log(checkout.lineItems, "Line Items"); // Array with one additional line item
+          });
       });
-    };
+    });
+  };
 
-    const handleBuyNow = () => {
-      setLoading(true);
-      client.checkout.create().then((checkout) => {
-        const checkoutID = checkout?.id;
-        const productId = "gid://shopify/Product/8069698126116";
-        client.product.fetch(productId).then((product) => {
-          const lineItemsToAdd = [
-            {
-              variantId: product?.variants?.[0]?.id,
-              quantity: quantity,
-              customAttributes: [],
-            },
-          ];
-          client.checkout
-            .addLineItems(checkoutID, lineItemsToAdd)
-            .then((checkout) => {
-              window.open(checkout?.webUrl);
-            });
-        });
+  const ADDED_TO_CART = [];
+  const handleAddToCart = () => {
+    ADDED_TO_CART?.push(SELECTED_PRODUCT_DATA);
+    localStorage?.setItem("addedToCartData", JSON.stringify(ADDED_TO_CART));
+  };
+
+  const handleBuyNow = () => {
+    setLoading(true);
+    client.checkout.create().then((checkout) => {
+      const checkoutID = checkout?.id;
+      const productId = "gid://shopify/Product/8069698126116";
+      client.product.fetch(productId).then((product) => {
+        const lineItemsToAdd = [
+          {
+            variantId: product?.variants?.[0]?.id,
+            quantity: quantity,
+            customAttributes: [],
+          },
+        ];
+        client.checkout
+          .addLineItems(checkoutID, lineItemsToAdd)
+          .then((checkout) => {
+            setLoading(false);
+            window.open(checkout?.webUrl);
+          });
       });
-      setLoading(false);
-    };
+    });
+  };
 
-    return (
+  return loading ? (
+    <Spinner loading={loading} />
+  ) : (
+    <CollectionContainer>
       <div>
-        {collections?.map((collection, index) => {
+        {COLLECTION_DATA?.map((collection, index) => {
           return (
             <div key={index}>
               <CollectionTitle>{collection?.collectionName}</CollectionTitle>
@@ -308,7 +324,7 @@ const Collections = () => {
                     {SELECTED_PRODUCT_DATA?.title}
                   </ProductDetailsProductName>
                 </div>
-                <div onClick={() => setOpen(false)}>
+                <div onClick={() => handleCloseSheet()}>
                   <i
                     className="fas fa-times"
                     style={{ color: "#fff", marginRight: "10px" }}
@@ -319,6 +335,10 @@ const Collections = () => {
                 <ProductDetailsImage
                   src={SELECTED_PRODUCT_DATA?.imageURLs?.[0]}
                 />
+                <ProductDetailsPriceContainer>
+                  <h1>&#8377;{SELECTED_PRODUCT_DATA?.originalPrice}</h1>
+                  <h2>&#8377;{SELECTED_PRODUCT_DATA?.mrp}</h2>
+                </ProductDetailsPriceContainer>
                 <ProductDetailsImagesContainer>
                   {SELECTED_PRODUCT_DATA?.imageURLs?.map((img, index) => {
                     return <img src={img} alt="img" key={index} />;
@@ -331,7 +351,7 @@ const Collections = () => {
                 <div style={{ marginTop: "12px" }}>
                   <ProductDetailsSizeHeader>Quantity</ProductDetailsSizeHeader>
                   <QuantityContainer>
-                    {quantity <= 0 ? (
+                    {quantity <= 1 ? (
                       <button>
                         <p>-</p>
                       </button>
@@ -394,7 +414,7 @@ const Collections = () => {
                   }}
                 />
                 <ButtonsContainer>
-                  <AddToBagButton>
+                  <AddToBagButton onClick={() => handleAddToCart()}>
                     <p>ADD TO BAG</p>
                   </AddToBagButton>
                   <BuyNowButton onClick={() => handleBuyNow()}>
@@ -406,15 +426,12 @@ const Collections = () => {
           </Sheet.Container>
         </Sheet>
       </div>
-    );
-  };
-
-  return loading ? (
-    <Spinner loading={loading} />
-  ) : (
-    <CollectionContainer>
-      <CollectionDisplay collections={COLLECTION_DATA} />
-      <SideBar />
+      <SideBar
+        data={SELECTED_PRODUCT_DATA}
+        quantity={quantity}
+        size={selectedSize}
+        color={selectedColor}
+      />
     </CollectionContainer>
   );
 };

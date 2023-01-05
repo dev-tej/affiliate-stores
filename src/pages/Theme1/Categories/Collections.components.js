@@ -42,9 +42,14 @@ export const CollectionProductsDisplay = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(
+    0.3deg,
+    rgba(0, 0, 0, 0.84) 21.46%,
+    rgba(0, 0, 0, 0) 50.27%
+  );
   position: absolute;
   bottom: 0;
+  margin-bottom: -1px;
 `;
 
 export const CollectionProductsInfo = styled.div`
@@ -114,6 +119,7 @@ export const ProductDetailsProductName = styled.h1`
 export const ProductDetailsInfoSection = styled.div`
   width: 100%;
   margin-top: -5px;
+  position: relative;
 `;
 
 export const ProductDetailsImage = styled.img`
@@ -124,8 +130,7 @@ export const ProductDetailsImage = styled.img`
 
 export const ProductDetailsPriceContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content:space-around;
   align-items: center;
   padding: 4px 10px;
   position: absolute;

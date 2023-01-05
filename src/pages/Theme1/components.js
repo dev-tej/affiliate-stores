@@ -27,6 +27,7 @@ export const ThemeHighlightStoryContainer = styled.div`
   & img {
     width: 100% !important;
     height: 100% !important;
+    opacity: 0.65;
   }
 `;
 
@@ -34,6 +35,7 @@ export const ThemeHighlightVideoDisplay = styled.video`
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: fill !important;
+  opacity: 0.65;
   &::-webkit-media-controls-panel {
     display: none !important;
     opacity: 1 !important;
@@ -48,7 +50,12 @@ export const InfluencerInfoContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  background: rgba(0, 0, 0, 0.5);
+  // background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 0.7) 14.58%,
+    rgba(0, 0, 0, 0) 60.42%
+  );
 `;
 
 export const InfluencerName = styled.h1`
