@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { CartContext } from "../../pages/Theme1/Categories/Collections";
 import {
   HamburgerButtonContainer,
   Navbar,
@@ -101,7 +102,7 @@ const SideBar = (props) => {
         <HorizontalLine />
         {CART_DATA?.map((prod, index) => {
           return (
-            <AddedCartProducts>
+            <AddedCartProducts key={index}>
               <div>
                 <AddedCartImage src={prod?.imageURLs?.[0]} alt="addedProduct" />
               </div>

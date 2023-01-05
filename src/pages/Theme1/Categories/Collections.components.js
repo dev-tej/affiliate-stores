@@ -130,7 +130,7 @@ export const ProductDetailsImage = styled.img`
 
 export const ProductDetailsPriceContainer = styled.div`
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
   padding: 4px 10px;
   position: absolute;
@@ -312,4 +312,29 @@ export const QuantityValue = styled.h1`
   font-size: 24px;
   line-height: 28px;
   color: #ffc323;
+`;
+
+export const CollectionCarouselContainer = styled.div`
+  width: 100%;
+`;
+
+export const CollectionPostsContentImage = styled.img`
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+`;
+
+export const CollectionSheetCloseContainer = styled.div`
+  position: absolute;
+  z-index: 999999999;
+  right: 0;
+  margin-right: 23px;
+  margin-top: 14px;
+  width: 24.17px;
+  height: 24.17px;
+  background: #fff;
+  border-radius: 4000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

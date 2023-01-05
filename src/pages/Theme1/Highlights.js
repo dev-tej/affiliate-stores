@@ -15,6 +15,8 @@ import {
   ThemeHighlightStoryContainer,
   ThemeHighlightVideoDisplay,
 } from "./components";
+import Highlight1 from "../../assets/Theme1/Highlight1.jpg";
+import Highlight2 from "../../assets/Theme1/Highlight2.jpg";
 
 const HIGHLIGHTS_STORIES = [
   {
@@ -23,7 +25,7 @@ const HIGHLIGHTS_STORIES = [
         <ThemeHighlightStoryContainer>
           <ThemeHighlightVideoDisplay controls autoPlay muted>
             <source
-              src="https://gallerify.s3.us-west-2.amazonaws.com/stores/video/story.mp4"
+              src="https://gallerify.s3.us-west-2.amazonaws.com/stores/video/highlight.mp4"
               type="video/mp4"
             />
           </ThemeHighlightVideoDisplay>
@@ -35,10 +37,7 @@ const HIGHLIGHTS_STORIES = [
     content: () => {
       return (
         <ThemeHighlightStoryContainer>
-          <img
-            src="https://gallerify.s3-us-west-2.amazonaws.com/instaphosts/18046848607307716.jpg"
-            alt="img"
-          />
+          <img src={Highlight1} alt="img" />
         </ThemeHighlightStoryContainer>
       );
     },
@@ -47,10 +46,7 @@ const HIGHLIGHTS_STORIES = [
     content: () => {
       return (
         <ThemeHighlightStoryContainer>
-          <img
-            src="https://gallerify.s3-us-west-2.amazonaws.com/instaphosts/17887530464516933.jpg"
-            alt="img"
-          />
+          <img src={Highlight2} alt="img" />
         </ThemeHighlightStoryContainer>
       );
     },

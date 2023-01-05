@@ -33,7 +33,7 @@ export const CarouselContainer = styled.div`
 
 export const PostsContentImage = styled.img`
   width: 100%;
-  height: 300px;
+  height: 400px;
   object-fit: cover;
   border-radius: 4px;
 `;

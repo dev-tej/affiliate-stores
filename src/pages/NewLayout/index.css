@@ -65,5 +65,5 @@
 
 .react-modal-sheet-container {
   border-radius: 0px !important;
-  /* height: 100vh !important; */
+  height: 100% !important;
 }

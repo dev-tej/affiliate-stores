@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import {
   CollectionContainer,
   CollectionProductBuyNowButton,
@@ -10,10 +12,7 @@ import {
   CollectionProductsInfo,
   CollectionTitle,
   ProductDetailsHeaderSection,
-  ProductDetailsImage,
-  ProductDetailsImagesContainer,
   ProductDetailsInfoSection,
-  ProductDetailsPriceContainer,
   ProductDetailsProductName,
   ProductDetailsSizeContainer,
   ProductDetailsSizeHeader,
@@ -24,6 +23,9 @@ import {
   SheetProductDisplay,
   QuantityContainer,
   QuantityValue,
+  CollectionCarouselContainer,
+  CollectionPostsContentImage,
+  CollectionSheetCloseContainer,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
 import SideBar from "../../../components/SideBar";
@@ -32,6 +34,28 @@ import Product1 from "../../../assets/NewLayout/Product1.svg";
 import Product2 from "../../../assets/NewLayout/Product2.svg";
 import Product3 from "../../../assets/NewLayout/Product3.svg";
 import Client from "shopify-buy";
+import { CarouselContainer, PostsContentImage } from "./Posts.components";
+
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 1,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 1,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 1,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
+
+export const CartContext = createContext();
 
 const COLLECTION_DATA = [
   {
@@ -177,9 +201,9 @@ const Collections = () => {
     storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
   });
 
-  client.collection.fetchAllWithProducts().then((collections) => {
-    console.log(collections, "Collections");
-  });
+  // client.collection.fetchAllWithProducts().then((collections) => {
+  //   console.log(collections, "Collections");
+  // });
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -245,6 +269,13 @@ const Collections = () => {
     localStorage?.setItem("addedToCartData", JSON.stringify(ADDED_TO_CART));
   };
 
+  const handleCheckOut = () => {
+    client.checkout.create().then((checkout) => {
+      // Do something with the checkout
+      console.log(checkout);
+    });
+  };
+
   const handleBuyNow = () => {
     setLoading(true);
     client.checkout.create().then((checkout) => {
@@ -262,6 +293,7 @@ const Collections = () => {
           .addLineItems(checkoutID, lineItemsToAdd)
           .then((checkout) => {
             setLoading(false);
+            // window.location.pathname(checkout?.webUrl);
             window.open(checkout?.webUrl);
           });
       });
@@ -271,172 +303,177 @@ const Collections = () => {
   return loading ? (
     <Spinner loading={loading} />
   ) : (
-    <CollectionContainer>
-      <div>
-        {COLLECTION_DATA?.map((collection, index) => {
-          return (
-            <div key={index}>
-              <CollectionTitle>{collection?.collectionName}</CollectionTitle>
-              <CollectionProductsContainer>
-                {collection?.collectionProducts?.map((product, index) => {
-                  return (
-                    <CollectionProductSection
-                      key={index}
-                      thumbnail={product?.thumbnail}
-                    >
-                      <CollectionProductsDisplay>
-                        <CollectionProductsInfo>
-                          <CollectionProductName>
-                            {product?.name?.substring(0, 20)}...
-                          </CollectionProductName>
-                          <CollectionProductPrice>
-                            {product?.price}
-                          </CollectionProductPrice>
-                        </CollectionProductsInfo>
-                        <CollectionProductBuyNowButton
-                          onClick={() => setOpen(true)}
-                        >
-                          <p>BUY NOW</p>
-                        </CollectionProductBuyNowButton>
-                      </CollectionProductsDisplay>
-                    </CollectionProductSection>
-                  );
-                })}
-              </CollectionProductsContainer>
-            </div>
-          );
-        })}
-        <Sheet
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          style={{
-            maxWidth: "480px",
-            display: "block",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <Sheet.Container
+    <CartContext.Provider value={ADDED_TO_CART}>
+      <CollectionContainer>
+        <div>
+          {COLLECTION_DATA?.map((collection, index) => {
+            return (
+              <div key={index}>
+                <CollectionTitle>{collection?.collectionName}</CollectionTitle>
+                <CollectionProductsContainer>
+                  {collection?.collectionProducts?.map((product, index) => {
+                    return (
+                      <CollectionProductSection
+                        key={index}
+                        thumbnail={product?.thumbnail}
+                      >
+                        <CollectionProductsDisplay>
+                          <CollectionProductsInfo>
+                            <CollectionProductName>
+                              {product?.name?.substring(0, 20)}...
+                            </CollectionProductName>
+                            <CollectionProductPrice>
+                              {product?.price}
+                            </CollectionProductPrice>
+                          </CollectionProductsInfo>
+                          <CollectionProductBuyNowButton
+                            onClick={() => setOpen(true)}
+                          >
+                            <p>BUY NOW</p>
+                          </CollectionProductBuyNowButton>
+                        </CollectionProductsDisplay>
+                      </CollectionProductSection>
+                    );
+                  })}
+                </CollectionProductsContainer>
+              </div>
+            );
+          })}
+          <Sheet
+            isOpen={open}
+            onClose={() => setOpen(false)}
             style={{
-              background: "#11100d",
+              maxWidth: "480px",
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
-            <SheetProductDisplay>
-              <ProductDetailsHeaderSection>
-                <div>
-                  <ProductDetailsProductName>
-                    {SELECTED_PRODUCT_DATA?.title}
-                  </ProductDetailsProductName>
-                </div>
-                <div onClick={() => handleCloseSheet()}>
-                  <i
-                    className="fas fa-times"
-                    style={{ color: "#fff", marginRight: "10px" }}
-                  ></i>
-                </div>
-              </ProductDetailsHeaderSection>
-              <ProductDetailsInfoSection>
-                <ProductDetailsImage
-                  src={SELECTED_PRODUCT_DATA?.imageURLs?.[0]}
-                />
-                <ProductDetailsPriceContainer>
-                  <h1>&#8377;{SELECTED_PRODUCT_DATA?.originalPrice}</h1>
-                  <h2>&#8377;{SELECTED_PRODUCT_DATA?.mrp}</h2>
-                </ProductDetailsPriceContainer>
-                <ProductDetailsImagesContainer>
-                  {SELECTED_PRODUCT_DATA?.imageURLs?.map((img, index) => {
-                    return <img src={img} alt="img" key={index} />;
-                  })}
-                </ProductDetailsImagesContainer>
-                <ProductDescription>
-                  {SELECTED_PRODUCT_DATA?.description}
-                  {/* <strong>Read more</strong> */}
-                </ProductDescription>
-                <div style={{ marginTop: "12px" }}>
-                  <ProductDetailsSizeHeader>Quantity</ProductDetailsSizeHeader>
-                  <QuantityContainer>
-                    {quantity <= 1 ? (
-                      <button>
-                        <p>-</p>
-                      </button>
-                    ) : (
-                      <button onClick={previousQuantity}>
-                        <p>-</p>
-                      </button>
-                    )}
-                    <QuantityValue>{quantity}</QuantityValue>
-                    <button onClick={nextQuantity}>
-                      <p>+</p>
-                    </button>
-                  </QuantityContainer>
-                </div>
-                <div>
-                  <ProductDetailsSizeHeader>Size</ProductDetailsSizeHeader>
-                  <ProductDetailsSizeContainer>
-                    {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
-                      return (
-                        <button
-                          key={index}
-                          className={
-                            selectedSize === size
-                              ? "selectedContainer"
-                              : "defaultContainer"
-                          }
-                          onClick={() => handleSizeChange(size)}
-                        >
-                          <p>{size}</p>
+            <Sheet.Container
+              style={{
+                background: "#11100d",
+              }}
+            >
+              <SheetProductDisplay>
+                <CollectionSheetCloseContainer
+                  onClick={() => handleCloseSheet()}
+                >
+                  <i className="fas fa-times" style={{ color: "#595656" }}></i>
+                </CollectionSheetCloseContainer>
+                <ProductDetailsInfoSection>
+                  <CollectionCarouselContainer>
+                    <Carousel
+                      showDots
+                      responsive={responsive}
+                      removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
+                      dotListclassName={"Posts_customDots"}
+                      autoPlay
+                      infinite
+                      // autoPlaySpeed={1000}
+                    >
+                      {SELECTED_PRODUCT_DATA?.imageURLs?.map(
+                        (content, index) => {
+                          return (
+                            <div key={index}>
+                              <CollectionPostsContentImage src={content} />
+                            </div>
+                          );
+                        }
+                      )}
+                    </Carousel>
+                  </CollectionCarouselContainer>
+                  <ProductDescription>
+                    {SELECTED_PRODUCT_DATA?.description}
+                    {/* <strong>Read more</strong> */}
+                  </ProductDescription>
+                  <div style={{ marginTop: "12px" }}>
+                    <ProductDetailsSizeHeader>
+                      Quantity
+                    </ProductDetailsSizeHeader>
+                    <QuantityContainer>
+                      {quantity <= 1 ? (
+                        <button>
+                          <p>-</p>
                         </button>
-                      );
-                    })}
-                  </ProductDetailsSizeContainer>
-                </div>
-                <div style={{ marginTop: "12px", marginBottom: "30px" }}>
-                  <ProductDetailsSizeHeader>Color</ProductDetailsSizeHeader>
-                  <ProductDetailsSizeContainer>
-                    {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
-                      return (
-                        <button
-                          key={index}
-                          className={
-                            selectedColor === color
-                              ? "selectedContainer"
-                              : "defaultContainer"
-                          }
-                          onClick={() => handleColorChange(color)}
-                        >
-                          {color}
+                      ) : (
+                        <button onClick={previousQuantity}>
+                          <p>-</p>
                         </button>
-                      );
-                    })}
-                  </ProductDetailsSizeContainer>
-                </div>
-                <hr
-                  style={{
-                    border: "1px solid #a3a3a3",
-                    width: "100%",
-                    opacity: 0.5,
-                  }}
-                />
-                <ButtonsContainer>
-                  <AddToBagButton onClick={() => handleAddToCart()}>
-                    <p>ADD TO BAG</p>
-                  </AddToBagButton>
-                  <BuyNowButton onClick={() => handleBuyNow()}>
-                    <p>BUY NOW</p>
-                  </BuyNowButton>
-                </ButtonsContainer>
-              </ProductDetailsInfoSection>
-            </SheetProductDisplay>
-          </Sheet.Container>
-        </Sheet>
-      </div>
-      <SideBar
-        data={SELECTED_PRODUCT_DATA}
-        quantity={quantity}
-        size={selectedSize}
-        color={selectedColor}
-      />
-    </CollectionContainer>
+                      )}
+                      <QuantityValue>{quantity}</QuantityValue>
+                      <button onClick={nextQuantity}>
+                        <p>+</p>
+                      </button>
+                    </QuantityContainer>
+                  </div>
+                  <div>
+                    <ProductDetailsSizeHeader>Size</ProductDetailsSizeHeader>
+                    <ProductDetailsSizeContainer>
+                      {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
+                        return (
+                          <button
+                            key={index}
+                            className={
+                              selectedSize === size
+                                ? "selectedContainer"
+                                : "defaultContainer"
+                            }
+                            onClick={() => handleSizeChange(size)}
+                          >
+                            <p>{size}</p>
+                          </button>
+                        );
+                      })}
+                    </ProductDetailsSizeContainer>
+                  </div>
+                  <div style={{ marginTop: "12px", marginBottom: "30px" }}>
+                    <ProductDetailsSizeHeader>Color</ProductDetailsSizeHeader>
+                    <ProductDetailsSizeContainer>
+                      {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
+                        return (
+                          <button
+                            key={index}
+                            className={
+                              selectedColor === color
+                                ? "selectedContainer"
+                                : "defaultContainer"
+                            }
+                            onClick={() => handleColorChange(color)}
+                          >
+                            {color}
+                          </button>
+                        );
+                      })}
+                    </ProductDetailsSizeContainer>
+                  </div>
+                  <hr
+                    style={{
+                      border: "1px solid #a3a3a3",
+                      width: "100%",
+                      opacity: 0.5,
+                    }}
+                  />
+                  <ButtonsContainer>
+                    <AddToBagButton onClick={() => handleAddToCart()}>
+                      <p>ADD TO BAG</p>
+                    </AddToBagButton>
+                    <BuyNowButton onClick={() => handleCheckOut()}>
+                      <p>BUY NOW</p>
+                    </BuyNowButton>
+                  </ButtonsContainer>
+                </ProductDetailsInfoSection>
+              </SheetProductDisplay>
+            </Sheet.Container>
+          </Sheet>
+        </div>
+        <SideBar
+          data={SELECTED_PRODUCT_DATA}
+          quantity={quantity}
+          size={selectedSize}
+          color={selectedColor}
+        />
+      </CollectionContainer>
+    </CartContext.Provider>
   );
 };
 
