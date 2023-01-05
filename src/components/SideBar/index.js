@@ -78,6 +78,11 @@ const SideBar = (props) => {
       ? JSON.parse(localStorage?.getItem("addedToCartData"))?.length
       : 0;
 
+  const CART_DATA =
+    JSON.parse(localStorage?.getItem("addedToCartData")) !== null
+      ? JSON.parse(localStorage?.getItem("addedToCartData"))
+      : [];
+
   return (
     <div>
       <HamburgerButtonContainer>
@@ -94,44 +99,48 @@ const SideBar = (props) => {
           <SideBarClose onClick={() => toggleDrawer(false)}>X</SideBarClose>
         </SettingsSection>
         <HorizontalLine />
-        <AddedCartProducts>
-          <div>
-            <AddedCartImage src={data?.imageURLs?.[0]} alt="addedProduct" />
-          </div>
-          <div>
-            <AddedCartProductInfo>
-              <h1>{data?.title}</h1>
-              <h1>&#8377;{data?.mrp}</h1>
-            </AddedCartProductInfo>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <QuantityContainer>
-                {quantity <= 1 ? (
-                  <button>
-                    <p>-</p>
-                  </button>
-                ) : (
-                  <button onClick={previousQuantity}>
-                    <p>-</p>
-                  </button>
-                )}
-                <QuantityValue>{quantity}</QuantityValue>
-                <button onClick={nextQuantity}>
-                  <p>+</p>
-                </button>
-              </QuantityContainer>
-              <i
-                class="fa-solid fa-trash-can"
-                style={{ color: "red", fontSize: "18px" }}
-              ></i>
-            </div>
-          </div>
-        </AddedCartProducts>
+        {CART_DATA?.map((prod, index) => {
+          return (
+            <AddedCartProducts>
+              <div>
+                <AddedCartImage src={prod?.imageURLs?.[0]} alt="addedProduct" />
+              </div>
+              <div>
+                <AddedCartProductInfo>
+                  <h1>{prod?.title}</h1>
+                  <h1>&#8377;{prod?.mrp}</h1>
+                </AddedCartProductInfo>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <QuantityContainer>
+                    {quantity <= 1 ? (
+                      <button>
+                        <p>-</p>
+                      </button>
+                    ) : (
+                      <button onClick={previousQuantity}>
+                        <p>-</p>
+                      </button>
+                    )}
+                    <QuantityValue>{quantity}</QuantityValue>
+                    <button onClick={nextQuantity}>
+                      <p>+</p>
+                    </button>
+                  </QuantityContainer>
+                  <i
+                    className="fa-solid fa-trash-can"
+                    style={{ color: "red", fontSize: "18px" }}
+                  ></i>
+                </div>
+              </div>
+            </AddedCartProducts>
+          );
+        })}
         <FixedContainer>
           <SubtotalContainer>
             <SubtotalSection>

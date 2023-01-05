@@ -177,6 +177,10 @@ const Collections = () => {
     storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
   });
 
+  client.collection.fetchAllWithProducts().then((collections) => {
+    console.log(collections, "Collections");
+  });
+
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
