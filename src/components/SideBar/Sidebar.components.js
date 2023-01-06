@@ -262,3 +262,22 @@ export const QuantityValue = styled.h1`
   line-height: 28px;
   color: #ffc323;
 `;
+
+export const EmptyCartContainer = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & img {
+    height: 200px;
+  }
+
+  & h1 {
+    margin-top: 20px;
+    font-family: Lora;
+    font-size: 22px;
+    color: #ffc323;
+  }
+`;

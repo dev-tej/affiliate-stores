@@ -25,13 +25,12 @@ export const CollectionProductsContainer = styled.div`
 `;
 
 export const CollectionProductSection = styled.div`
-  width: 232px;
-  height: 257px;
+  width: 250px;
+  height: 300px;
   margin: 10px 0px;
   background-image: url(${(props) => props.thumbnail});
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1px solid rgba(255, 243, 226, 0.5);
   border-radius: 8px;
   position: relative;
 `;
@@ -43,9 +42,9 @@ export const CollectionProductsDisplay = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   background: linear-gradient(
-    0.3deg,
-    rgba(0, 0, 0, 0.84) 21.46%,
-    rgba(0, 0, 0, 0) 50.27%
+    to top,
+    rgba(0, 0, 0, 0.84) 50.46%,
+    rgba(0, 0, 0, 0) 100.27%
   );
   position: absolute;
   bottom: 0;
@@ -209,17 +208,23 @@ export const ProductDetailsSizeContainer = styled.div`
 export const ProductDescription = styled.h1`
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  color: #fff;
-  padding: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #999999;
+  padding: 10px 14px;
+  margin-top: -10px;
+
+  & span {
+    font-weight: bolder;
+  }
 `;
 
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 20px 0px;
+  border-top: 1px solid #a3a3a3;
+  padding: 10px;
 `;
 
 export const AddToBagButton = styled.button`
@@ -337,4 +342,65 @@ export const CollectionSheetCloseContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const CollectionPriceContainer = styled.div`
+  margin: 20px 16px;
+`;
+
+export const CollectionPriceSection = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 8px;
+`;
+
+export const CollectionMRP = styled.h1`
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 16px;
+  color: #efefef;
+`;
+
+export const CollectionOriginalPrice = styled.h1`
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration-line: line-through;
+  color: #a3a3a3;
+`;
+
+export const CollectionDiscountText = styled.h1`
+  margin-top: -5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #e3bf35;
+`;
+
+export const CollectionProductInfoSection = styled.div`
+  height: 350px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const CollectionProductTitle = styled.h1`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #efefef;
+  margin-left: 16px;
+
+  & span {
+    font-weight: bolder;
+  }
 `;

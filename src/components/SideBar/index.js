@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { CartContext } from "../../pages/Theme1/Categories/Collections";
+import Client from "shopify-buy";
 import {
   HamburgerButtonContainer,
   Navbar,
@@ -19,8 +20,9 @@ import {
   AddedCartProductInfo,
   QuantityContainer,
   QuantityValue,
+  EmptyCartContainer,
 } from "./Sidebar.components";
-import Client from "shopify-buy";
+import EmptyCart from "../../assets/Theme1/EmptyCart.svg";
 
 const SideBar = (props) => {
   const { size, color, quantity, data } = props;
@@ -86,77 +88,102 @@ const SideBar = (props) => {
 
   return (
     <div>
-      <HamburgerButtonContainer>
-        <i
-          className="fa-solid fa-cart-shopping"
-          style={{ marginLeft: "2px" }}
-          onClick={() => toggleDrawer(true)}
-        ></i>
-        <CartLengthHeader>{CART_LENGTH}</CartLengthHeader>
-      </HamburgerButtonContainer>
-      <Navbar.Items ref={drawerRef} openDrawer={openDrawer}>
-        <SettingsSection>
-          <SettingsHeader>Your shopping bag</SettingsHeader>
-          <SideBarClose onClick={() => toggleDrawer(false)}>X</SideBarClose>
-        </SettingsSection>
-        <HorizontalLine />
-        {CART_DATA?.map((prod, index) => {
-          return (
-            <AddedCartProducts key={index}>
-              <div>
-                <AddedCartImage src={prod?.imageURLs?.[0]} alt="addedProduct" />
-              </div>
-              <div>
-                <AddedCartProductInfo>
-                  <h1>{prod?.title}</h1>
-                  <h1>&#8377;{prod?.mrp}</h1>
-                </AddedCartProductInfo>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <QuantityContainer>
-                    {quantity <= 1 ? (
-                      <button>
-                        <p>-</p>
-                      </button>
-                    ) : (
-                      <button onClick={previousQuantity}>
-                        <p>-</p>
-                      </button>
-                    )}
-                    <QuantityValue>{quantity}</QuantityValue>
-                    <button onClick={nextQuantity}>
-                      <p>+</p>
-                    </button>
-                  </QuantityContainer>
-                  <i
-                    className="fa-solid fa-trash-can"
-                    style={{ color: "red", fontSize: "18px" }}
-                  ></i>
-                </div>
-              </div>
-            </AddedCartProducts>
-          );
-        })}
-        <FixedContainer>
-          <SubtotalContainer>
-            <SubtotalSection>
-              <SubtotlHeader>Subtotal</SubtotlHeader>
-              <SubtotlHeader>&#8377;&nbsp;{data?.mrp}</SubtotlHeader>
-            </SubtotalSection>
-            <SubtotalDescription>
-              Shipping, taxes, and discount codes calculated at checkout.
-            </SubtotalDescription>
-          </SubtotalContainer>
-          <CheckoutButton onClick={() => handleBuyNow()}>
-            <p>Continue to Checkout</p>
-          </CheckoutButton>
-        </FixedContainer>
-      </Navbar.Items>
+      {CART_LENGTH?.length >= 1 ? (
+        <div>
+          <HamburgerButtonContainer>
+            <i
+              className="fa-solid fa-cart-shopping"
+              style={{ marginLeft: "2px" }}
+              onClick={() => toggleDrawer(true)}
+            ></i>
+            <CartLengthHeader>{CART_LENGTH}</CartLengthHeader>
+          </HamburgerButtonContainer>
+          <Navbar.Items ref={drawerRef} openDrawer={openDrawer}>
+            <SettingsSection>
+              <SettingsHeader>Your shopping bag</SettingsHeader>
+              <SideBarClose onClick={() => toggleDrawer(false)}>X</SideBarClose>
+            </SettingsSection>
+            <HorizontalLine />
+            {CART_DATA?.map((prod, index) => {
+              return (
+                <AddedCartProducts key={index}>
+                  <div>
+                    <AddedCartImage
+                      src={prod?.imageURLs?.[0]}
+                      alt="addedProduct"
+                    />
+                  </div>
+                  <div>
+                    <AddedCartProductInfo>
+                      <h1>{prod?.title}</h1>
+                      <h1>&#8377;{prod?.mrp}</h1>
+                    </AddedCartProductInfo>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <QuantityContainer>
+                        {quantity <= 1 ? (
+                          <button>
+                            <p>-</p>
+                          </button>
+                        ) : (
+                          <button onClick={previousQuantity}>
+                            <p>-</p>
+                          </button>
+                        )}
+                        <QuantityValue>{quantity}</QuantityValue>
+                        <button onClick={nextQuantity}>
+                          <p>+</p>
+                        </button>
+                      </QuantityContainer>
+                      <i
+                        className="fa-solid fa-trash-can"
+                        style={{ color: "red", fontSize: "18px" }}
+                      ></i>
+                    </div>
+                  </div>
+                </AddedCartProducts>
+              );
+            })}
+            <FixedContainer>
+              <SubtotalContainer>
+                <SubtotalSection>
+                  <SubtotlHeader>Subtotal</SubtotlHeader>
+                  <SubtotlHeader>&#8377;&nbsp;{data?.mrp}</SubtotlHeader>
+                </SubtotalSection>
+                <SubtotalDescription>
+                  Shipping, taxes, and discount codes calculated at checkout.
+                </SubtotalDescription>
+              </SubtotalContainer>
+              <CheckoutButton onClick={() => handleBuyNow()}>
+                <p>Continue to Checkout</p>
+              </CheckoutButton>
+            </FixedContainer>
+          </Navbar.Items>
+        </div>
+      ) : (
+        <div>
+          <HamburgerButtonContainer>
+            <i
+              className="fa-solid fa-cart-shopping"
+              style={{ marginLeft: "2px" }}
+              onClick={() => toggleDrawer(true)}
+            ></i>
+            <CartLengthHeader>{CART_LENGTH}</CartLengthHeader>
+          </HamburgerButtonContainer>
+          <Navbar.Items ref={drawerRef} openDrawer={openDrawer}>
+            <SideBarClose onClick={() => toggleDrawer(false)}>X</SideBarClose>
+            <EmptyCartContainer>
+              <img src={EmptyCart} alt="emptyCart" />
+              <h1>Your cart is empty</h1>
+            </EmptyCartContainer>
+          </Navbar.Items>
+        </div>
+      )}
     </div>
   );
 };

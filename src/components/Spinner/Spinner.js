@@ -7,16 +7,13 @@ const LoaderContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   display: flex;
-  jusify-content: center;
-  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
   align-items: center;
 `;
 
 const override = css`
   width: 100%;
-  display: flex;
-  jusify-content: center;
-  align-items: center;
+  min-height: 100vh;
   border-color: #ffc323;
 `;
 

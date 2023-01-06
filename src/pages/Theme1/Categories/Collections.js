@@ -1,6 +1,7 @@
 import React, { useState, createContext } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import toast, { Toaster } from "react-hot-toast";
 import {
   CollectionContainer,
   CollectionProductBuyNowButton,
@@ -11,9 +12,7 @@ import {
   CollectionProductSection,
   CollectionProductsInfo,
   CollectionTitle,
-  ProductDetailsHeaderSection,
   ProductDetailsInfoSection,
-  ProductDetailsProductName,
   ProductDetailsSizeContainer,
   ProductDetailsSizeHeader,
   ProductDescription,
@@ -26,6 +25,13 @@ import {
   CollectionCarouselContainer,
   CollectionPostsContentImage,
   CollectionSheetCloseContainer,
+  CollectionPriceContainer,
+  CollectionPriceSection,
+  CollectionMRP,
+  CollectionOriginalPrice,
+  CollectionDiscountText,
+  CollectionProductInfoSection,
+  CollectionProductTitle,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
 import SideBar from "../../../components/SideBar";
@@ -186,6 +192,7 @@ const COLLECTION_DATA = [
 const SELECTED_PRODUCT_DATA = {
   title: "Checked Cotton Shirt",
   imageURLs: [Product1, Product2, Product3],
+  name: "Mast and Harbour and Tan Brown Solid and Tan Brown Solid Harbour and Tan Brown Solid and Tan Brown Solid ",
   description:
     "100% Cotton. Available in plain or floral print. Straight design. Mao neckline. Long sleeve. Button fastening on the front section",
   size: ["XS", "S", "M", "L"],
@@ -210,6 +217,8 @@ const Collections = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [titleReadMore, setTitleReadMore] = useState(false);
+  const [descriptionReadMore, setDescriptionReadMore] = useState(false);
 
   const handleCloseSheet = () => {
     setOpen(false);
@@ -267,6 +276,21 @@ const Collections = () => {
   const handleAddToCart = () => {
     ADDED_TO_CART?.push(SELECTED_PRODUCT_DATA);
     localStorage?.setItem("addedToCartData", JSON.stringify(ADDED_TO_CART));
+    setQuantity(1);
+    setSelectedSize("");
+    setSelectedColor("");
+    toast.success("Added to Cart", {
+      style: {
+        border: "1px solid #11100d",
+        padding: "16px",
+        color: "#ffc323",
+        background: "#11100d",
+      },
+      iconTheme: {
+        primary: "#ffc323",
+        secondary: "#11100d",
+      },
+    });
   };
 
   const handleCheckOut = () => {
@@ -301,9 +325,20 @@ const Collections = () => {
   };
 
   return loading ? (
-    <Spinner loading={loading} />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        minHeight: "100vh",
+      }}
+    >
+      <Spinner loading={loading} />
+    </div>
   ) : (
     <CartContext.Provider value={ADDED_TO_CART}>
+      <Toaster position="top-center" />
       <CollectionContainer>
         <div>
           {COLLECTION_DATA?.map((collection, index) => {
@@ -382,87 +417,149 @@ const Collections = () => {
                       )}
                     </Carousel>
                   </CollectionCarouselContainer>
-                  <ProductDescription>
-                    {SELECTED_PRODUCT_DATA?.description}
-                    {/* <strong>Read more</strong> */}
-                  </ProductDescription>
-                  <div style={{ marginTop: "12px" }}>
-                    <ProductDetailsSizeHeader>
-                      Quantity
-                    </ProductDetailsSizeHeader>
-                    <QuantityContainer>
-                      {quantity <= 1 ? (
-                        <button>
-                          <p>-</p>
-                        </button>
-                      ) : (
-                        <button onClick={previousQuantity}>
-                          <p>-</p>
-                        </button>
-                      )}
-                      <QuantityValue>{quantity}</QuantityValue>
-                      <button onClick={nextQuantity}>
-                        <p>+</p>
-                      </button>
-                    </QuantityContainer>
-                  </div>
-                  <div>
-                    <ProductDetailsSizeHeader>Size</ProductDetailsSizeHeader>
-                    <ProductDetailsSizeContainer>
-                      {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
-                        return (
-                          <button
-                            key={index}
-                            className={
-                              selectedSize === size
-                                ? "selectedContainer"
-                                : "defaultContainer"
-                            }
-                            onClick={() => handleSizeChange(size)}
-                          >
-                            <p>{size}</p>
+                  <CollectionProductInfoSection>
+                    <CollectionPriceContainer>
+                      <CollectionPriceSection>
+                        <CollectionMRP>
+                          &#8377;&nbsp;{SELECTED_PRODUCT_DATA?.mrp}
+                        </CollectionMRP>
+                        <CollectionOriginalPrice>
+                          {SELECTED_PRODUCT_DATA?.originalPrice}
+                        </CollectionOriginalPrice>
+                      </CollectionPriceSection>
+                      <CollectionDiscountText>67% OFF</CollectionDiscountText>
+                    </CollectionPriceContainer>
+                    {titleReadMore ? (
+                      <CollectionProductTitle>
+                        {SELECTED_PRODUCT_DATA?.title}&nbsp;&nbsp;
+                        <span
+                          onClick={() => setTitleReadMore(!descriptionReadMore)}
+                        >
+                          SEE LESS
+                        </span>
+                      </CollectionProductTitle>
+                    ) : (
+                      <CollectionProductTitle>
+                        {SELECTED_PRODUCT_DATA?.title?.substring(0, 30)}
+                        ...&nbsp;&nbsp;
+                        <span
+                          onClick={() => setTitleReadMore(!descriptionReadMore)}
+                        >
+                          SEE MORE
+                        </span>
+                      </CollectionProductTitle>
+                    )}
+                    {descriptionReadMore ? (
+                      <ProductDescription>
+                        {SELECTED_PRODUCT_DATA?.description}&nbsp;&nbsp;
+                        <span
+                          onClick={() =>
+                            setDescriptionReadMore(!descriptionReadMore)
+                          }
+                        >
+                          SEE LESS
+                        </span>
+                      </ProductDescription>
+                    ) : (
+                      <ProductDescription>
+                        {SELECTED_PRODUCT_DATA?.description?.substring(0, 100)}
+                        ...&nbsp;&nbsp;
+                        <span
+                          onClick={() =>
+                            setDescriptionReadMore(!descriptionReadMore)
+                          }
+                        >
+                          SEE MORE
+                        </span>
+                      </ProductDescription>
+                    )}
+                    <div style={{ marginTop: "12px", marginLeft: "8px" }}>
+                      <ProductDetailsSizeHeader>
+                        Quantity
+                      </ProductDetailsSizeHeader>
+                      <QuantityContainer>
+                        {quantity <= 1 ? (
+                          <button>
+                            <p>-</p>
                           </button>
-                        );
-                      })}
-                    </ProductDetailsSizeContainer>
-                  </div>
-                  <div style={{ marginTop: "12px", marginBottom: "30px" }}>
-                    <ProductDetailsSizeHeader>Color</ProductDetailsSizeHeader>
-                    <ProductDetailsSizeContainer>
-                      {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
-                        return (
-                          <button
-                            key={index}
-                            className={
-                              selectedColor === color
-                                ? "selectedContainer"
-                                : "defaultContainer"
-                            }
-                            onClick={() => handleColorChange(color)}
-                          >
-                            {color}
+                        ) : (
+                          <button onClick={previousQuantity}>
+                            <p>-</p>
                           </button>
-                        );
-                      })}
-                    </ProductDetailsSizeContainer>
-                  </div>
-                  <hr
-                    style={{
-                      border: "1px solid #a3a3a3",
-                      width: "100%",
-                      opacity: 0.5,
-                    }}
-                  />
-                  <ButtonsContainer>
-                    <AddToBagButton onClick={() => handleAddToCart()}>
-                      <p>ADD TO BAG</p>
-                    </AddToBagButton>
-                    <BuyNowButton onClick={() => handleCheckOut()}>
-                      <p>BUY NOW</p>
-                    </BuyNowButton>
-                  </ButtonsContainer>
+                        )}
+                        <QuantityValue>{quantity}</QuantityValue>
+                        <button onClick={nextQuantity}>
+                          <p>+</p>
+                        </button>
+                      </QuantityContainer>
+                    </div>
+                    <div style={{ marginLeft: "8px" }}>
+                      <ProductDetailsSizeHeader>Size</ProductDetailsSizeHeader>
+                      <ProductDetailsSizeContainer>
+                        {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
+                          return (
+                            <button
+                              key={index}
+                              className={
+                                selectedSize === size
+                                  ? "selectedContainer"
+                                  : "defaultContainer"
+                              }
+                              onClick={() => handleSizeChange(size)}
+                            >
+                              <p>{size}</p>
+                            </button>
+                          );
+                        })}
+                      </ProductDetailsSizeContainer>
+                    </div>
+                    <div
+                      style={{
+                        marginTop: "12px",
+                        marginBottom: "30px",
+                        marginLeft: "8px",
+                      }}
+                    >
+                      <ProductDetailsSizeHeader>Color</ProductDetailsSizeHeader>
+                      <ProductDetailsSizeContainer>
+                        {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
+                          return (
+                            <button
+                              key={index}
+                              className={
+                                selectedColor === color
+                                  ? "selectedContainer"
+                                  : "defaultContainer"
+                              }
+                              onClick={() => handleColorChange(color)}
+                            >
+                              {color}
+                            </button>
+                          );
+                        })}
+                      </ProductDetailsSizeContainer>
+                    </div>
+                  </CollectionProductInfoSection>
                 </ProductDetailsInfoSection>
               </SheetProductDisplay>
+              <ButtonsContainer>
+                <AddToBagButton
+                  onClick={() => {
+                    setOpen(false);
+                    handleAddToCart();
+                  }}
+                >
+                  <p>ADD TO BAG</p>
+                </AddToBagButton>
+                <BuyNowButton
+                  onClick={() => {
+                    setOpen(false);
+                    handleBuyNow();
+                  }}
+                >
+                  <p>BUY NOW</p>
+                </BuyNowButton>
+              </ButtonsContainer>
             </Sheet.Container>
           </Sheet>
         </div>
