@@ -32,6 +32,7 @@ import {
   CollectionDiscountText,
   CollectionProductInfoSection,
   CollectionProductTitle,
+  SpinnerInfoContainer,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
 import SideBar from "../../../components/SideBar";
@@ -328,13 +329,19 @@ const Collections = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        minHeight: "100vh",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        background: "rgba(0, 0, 0, 0.5)",
       }}
     >
       <Spinner loading={loading} />
+      <SpinnerInfoContainer>
+        <h1>Hang Tight!</h1>
+        <p>
+          You’re being redirected to another page, it may take upto 5 second
+        </p>
+      </SpinnerInfoContainer>
     </div>
   ) : (
     <CartContext.Provider value={ADDED_TO_CART}>

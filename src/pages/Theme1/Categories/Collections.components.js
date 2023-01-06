@@ -404,3 +404,29 @@ export const CollectionProductTitle = styled.h1`
     font-weight: bolder;
   }
 `;
+
+export const SpinnerInfoContainer = styled.div`
+  margin-top: 10px;
+  width: 90%;
+  display: grid;
+  place-items: center;
+
+  & h1 {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    color: #dedede;
+  }
+
+  & p {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #999999;
+  }
+`;
