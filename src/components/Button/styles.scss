@@ -1,0 +1,20 @@
+
+  .btn-main{
+    background-color: #ff3f6c;
+    height: 32px;
+    border: none;
+    color: #ffffff;
+    padding: 0 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &.outline{
+        background: transparent;
+        border: 1px solid #ff3f6c;
+        color: #ff3f6c;
+        border-radius: 4px;
+        height: 32px;
+        margin: 10px 0;
+    }
+}

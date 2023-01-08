@@ -1,0 +1,14 @@
+
+.dashboard{
+    background-color: #f4f4f5;
+    overflow: scroll;
+    height: calc(100vh - 30px);
+
+    h3{
+        font-size: 20px;
+        margin: 16px 12px 10px;
+        text-align: left;
+        color: rgb(40, 44, 63);
+        font-weight: 500;
+    }
+}

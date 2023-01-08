@@ -1,0 +1,146 @@
+.post{
+    background-color: #fff;
+
+    .postHeader{
+        padding: 15px;
+        display: flex;
+        align-items: flex-start;
+        img{
+            border-radius: 50%;
+            overflow: hidden;
+            width: 36px;
+            height: 36px;
+        }
+        .postName{
+            margin: 0px 10px;
+            cursor: pointer;
+
+            h4{
+                margin: 0 0 3px 0;
+                font-size: 16px;
+            }
+            p{
+                margin: 0;
+                font-size: 12px;
+                color: #282c3f99;
+            }
+        }
+        .follow{
+            color: #ff3f6c;
+            font-size: 14px;
+            margin: 2px;
+            cursor: pointer;
+        }
+        .bullet{
+            color: #282c3f33;
+            font-size: 8px;
+            margin: 5px 8px 8px 0;
+        }
+    }
+
+    .postImage{
+        img{
+            width: 100%;
+            max-height: 500px;
+            height: 100%;
+        }
+    }
+
+    .relatedContent{
+        padding: 0 10px 10px 10px;
+        display: flex;
+        overflow-x: scroll;
+
+        .shopAll{
+            width: 100px;
+            padding: 10px;
+            cursor: pointer;
+            .shopIcon{
+                border: 1px solid #ff3f6c;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
+            p{
+                color:#ff3f6c;
+                font-size: 10px;
+                width: 30px;
+                text-align: center;
+                font-size: 12px;
+                font-weight: 600;
+                margin: 3px 0;
+            }
+        }
+
+        .relatedContainer{
+            min-width: 184px;
+            width: fit-content;
+            margin-left: 8px;
+            max-height: 60px;
+            border: 1px solid #00000033;
+            padding: 8px;
+            display: flex;
+            cursor: pointer;
+            img{
+                width: 43px;
+            }
+            .relatedText{
+                padding: 0 10px;
+                .title{
+                    margin: 0 0 3px 0;
+                    font-weight: 300;
+                    font-size: 14px;
+                }
+                .priceMain{
+                    margin: 0 0 3px 0;
+                    color: #282c3f;
+                    font-weight: bold;
+
+                    .priceDiscount{
+                        text-decoration-line: line-through;
+                        font-weight: 300;
+                        font-size: 13px;
+                        margin-left: 3px;
+                    }
+                }
+                .percentage{
+                    margin: 0 0 3px 0;
+                    font-weight: 300;
+                    color: #ff3f6c;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    .iconOut{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+    }
+
+    .description{
+        color: #282c3fcc;
+        padding: 15px;
+        p{
+            font-weight: 300;
+            font-size: 16px;
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        .hashTags{
+            display: flex;
+            span{
+                color: #282c3f;
+                font-size: 14px;
+                font-weight: 600;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
