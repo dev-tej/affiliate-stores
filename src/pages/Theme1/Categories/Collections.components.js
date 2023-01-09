@@ -326,7 +326,7 @@ export const CollectionCarouselContainer = styled.div`
 export const CollectionPostsContentImage = styled.img`
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  aspect-ratio: 16/9;
 `;
 
 export const CollectionSheetCloseContainer = styled.div`

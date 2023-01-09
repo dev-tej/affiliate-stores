@@ -102,7 +102,7 @@ export const InfluencerInfoDisplayProducts = styled.div`
   & img {
     width: 20px;
     height: 20px;
-    // border-radius: 64px;
+    border-radius: 64px;
     margin-left: -5px;
   }
 `;

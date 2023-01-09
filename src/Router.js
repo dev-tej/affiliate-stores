@@ -9,7 +9,7 @@ const Router = () => {
     <Routes>
       <Route exact path="/" element={<NewLayout />} />
       {/* <Route exact path="/new" element={<NewLayout />} /> */}
-      <Route exact path="/demo-shopify-store" element={<Theme1 />} />
+      <Route exact path="/:brand/store/:slug/:username" element={<Theme1 />} />
     </Routes>
   );
 };

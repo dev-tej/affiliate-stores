@@ -3,8 +3,10 @@ import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 
-const SpinnerContainer = styled.div`
-  width: 90%;
+const LoaderContainer = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,17 +19,17 @@ const override = css`
   place-items: center;
 `;
 
-const Spinner = (props) => {
+const Loader = (props) => {
   return (
-    <SpinnerContainer>
+    <LoaderContainer>
       <ClipLoader
         color={"#ffc323"}
         loading={props?.loading}
         css={override}
         size={50}
       />
-    </SpinnerContainer>
+    </LoaderContainer>
   );
 };
 
-export default Spinner;
+export default Loader;

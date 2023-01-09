@@ -22,7 +22,7 @@ const Products = (props) => {
               <ProductName>{product?.tilte}</ProductName>
               <ProductPrice>{product?.price}</ProductPrice>
               <ProductDiscountPercentage>
-                {product?.discount}
+                {product?.discount || product?.description}
               </ProductDiscountPercentage>
             </div>
           </ProductSection>

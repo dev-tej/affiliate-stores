@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserStoreData } from "./index";
 import {
   ProductionHighlightStories,
   DevelopmentHighlightStories,
@@ -15,127 +16,125 @@ import {
   ThemeHighlightStoryContainer,
   ThemeHighlightVideoDisplay,
 } from "./components";
-import Highlight1 from "../../assets/Theme1/Highlight1.jpg";
-import Highlight2 from "../../assets/Theme1/Highlight2.jpg";
-
-const HIGHLIGHTS_STORIES = [
-  {
-    content: () => {
-      return (
-        <ThemeHighlightStoryContainer>
-          <ThemeHighlightVideoDisplay controls autoPlay muted>
-            <source
-              src="https://gallerify.s3.us-west-2.amazonaws.com/stores/video/highlight.mp4"
-              type="video/mp4"
-            />
-          </ThemeHighlightVideoDisplay>
-        </ThemeHighlightStoryContainer>
-      );
-    },
-  },
-  {
-    content: () => {
-      return (
-        <ThemeHighlightStoryContainer>
-          <img src={Highlight1} alt="img" />
-        </ThemeHighlightStoryContainer>
-      );
-    },
-  },
-  {
-    content: () => {
-      return (
-        <ThemeHighlightStoryContainer>
-          <img src={Highlight2} alt="img" />
-        </ThemeHighlightStoryContainer>
-      );
-    },
-  },
-];
+import numeral from "numeral";
 
 const ThemeHighlights = () => {
+  const storeData = useContext(UserStoreData);
+
+  const HIGHLIGHTS = storeData?.profileSection?.images?.map((val) => ({
+    content: () => {
+      return (
+        <ThemeHighlightStoryContainer>
+          {val?.includes("mp4") ? (
+            <ThemeHighlightVideoDisplay controls autoPlay muted>
+              <source src={val} type="video/mp4" />
+            </ThemeHighlightVideoDisplay>
+          ) : (
+            <ThemeHighlightStoryContainer>
+              <img src={val} alt="img" />
+            </ThemeHighlightStoryContainer>
+          )}
+        </ThemeHighlightStoryContainer>
+      );
+    },
+  }));
+
   return (
     <ThemeHighlightStoriesSection>
       {!process.env.NODE_ENV || process.env.NODE_ENV === "development" ? (
         <div style={{ position: "relative" }}>
-          <DevelopmentHighlightStories highlights={HIGHLIGHTS_STORIES} />
+          {storeData?.profileSection?.images?.length >= 1 && (
+            <DevelopmentHighlightStories highlights={HIGHLIGHTS} />
+          )}
           <InfluencerInfoContainer>
             <div>
-              <InfluencerName>Aashna Shroff</InfluencerName>
-              <InfluencerUsername>@aashnashroff</InfluencerUsername>
+              <InfluencerName>{storeData?.profileSection?.name}</InfluencerName>
+              <InfluencerUsername>
+                @{storeData?.profileSection?.username}
+              </InfluencerUsername>
               <InfluencerExtraInfoContainer>
-                <InfluencerExtraInfoHeader>
-                  12K Followers
-                </InfluencerExtraInfoHeader>
+                {storeData?.profileSection?.followers >= 1000 ? (
+                  <InfluencerExtraInfoHeader>
+                    {numeral(storeData?.profileSection?.followers)
+                      ?.format("0a")
+                      ?.toUpperCase()}{" "}
+                    Followers
+                  </InfluencerExtraInfoHeader>
+                ) : (
+                  <InfluencerExtraInfoHeader>
+                    {storeData?.profileSection?.followers} Followers
+                  </InfluencerExtraInfoHeader>
+                )}
                 <InfluencerExtraInfoDiv />
                 <InfluencerExtraInfoHeader>
-                  12 Collections
+                  {storeData?.profileSection?.collections} Collections
                 </InfluencerExtraInfoHeader>
               </InfluencerExtraInfoContainer>
             </div>
             <div>
               <InfluencerInfoDisplayProducts>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/1AOdourlessHighStrengthWildFish_200Caps__1000x1000_FS_8808147c-4e59-4f06-a391-b8cdaca4f4b9_400x.png?v=1668656955"
-                  alt="prodImg"
-                />
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/1womensMulti60_400x.png?v=1662527544"
-                  alt="prodImg"
-                />
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/1_Mens_Multi_30_400x.png?v=1655301309"
-                  alt="prodImg"
-                />
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/BiotinGummies_400x.png?v=1670314155"
-                  alt="prodImg"
-                />
+                {storeData?.profileSection?.products?.map((prod, index) => {
+                  return (
+                    <img
+                      src={prod?.image}
+                      onClick={() => window.open(prod?.url)}
+                      alt="prodImg"
+                      key={index}
+                    />
+                  );
+                })}
               </InfluencerInfoDisplayProducts>
               <InfluencerExtraInfoHeader>
-                31+ Products
+                {storeData?.profileSection?.products?.length}+ Products
               </InfluencerExtraInfoHeader>
             </div>
           </InfluencerInfoContainer>
         </div>
       ) : (
         <div>
-          <ProductionHighlightStories highlights={HIGHLIGHTS_STORIES} />
+          {storeData?.profileSection?.images?.length >= 1 && (
+            <ProductionHighlightStories highlights={HIGHLIGHTS} />
+          )}
           <InfluencerInfoContainer>
             <div>
-              <InfluencerName>Aashna Shroff</InfluencerName>
-              <InfluencerUsername>@aashnashroff</InfluencerUsername>
+              <InfluencerName>{storeData?.profileSection?.name}</InfluencerName>
+              <InfluencerUsername>
+                @{storeData?.profileSection?.username}
+              </InfluencerUsername>
               <InfluencerExtraInfoContainer>
-                <InfluencerExtraInfoHeader>
-                  12K Followers
-                </InfluencerExtraInfoHeader>
+                {storeData?.profileSection?.followers >= 1000 ? (
+                  <InfluencerExtraInfoHeader>
+                    {numeral(storeData?.profileSection?.followers)
+                      ?.format("0a")
+                      ?.toUpperCase()}{" "}
+                    Followers
+                  </InfluencerExtraInfoHeader>
+                ) : (
+                  <InfluencerExtraInfoHeader>
+                    {storeData?.profileSection?.followers} Followers
+                  </InfluencerExtraInfoHeader>
+                )}
                 <InfluencerExtraInfoDiv />
                 <InfluencerExtraInfoHeader>
-                  12 Collections
+                  {storeData?.profileSection?.collections} Collections
                 </InfluencerExtraInfoHeader>
               </InfluencerExtraInfoContainer>
             </div>
             <div>
               <InfluencerInfoDisplayProducts>
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/1AOdourlessHighStrengthWildFish_200Caps__1000x1000_FS_8808147c-4e59-4f06-a391-b8cdaca4f4b9_400x.png?v=1668656955"
-                  alt="prodImg"
-                />
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/1womensMulti60_400x.png?v=1662527544"
-                  alt="prodImg"
-                />
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/1_Mens_Multi_30_400x.png?v=1655301309"
-                  alt="prodImg"
-                />
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0556/6264/1337/products/BiotinGummies_400x.png?v=1670314155"
-                  alt="prodImg"
-                />
+                {storeData?.profileSection?.products?.map((prod, index) => {
+                  return (
+                    <img
+                      src={prod?.image}
+                      onClick={() => window.open(prod?.url)}
+                      alt="prodImg"
+                      key={index}
+                    />
+                  );
+                })}
               </InfluencerInfoDisplayProducts>
               <InfluencerExtraInfoHeader>
-                31+ Products
+                {storeData?.profileSection?.products?.length}+ Products
               </InfluencerExtraInfoHeader>
             </div>
           </InfluencerInfoContainer>

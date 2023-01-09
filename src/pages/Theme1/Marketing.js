@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserStoreData } from "./index";
 import toast, { Toaster } from "react-hot-toast";
 import {
   CheckOutSection,
@@ -9,6 +10,8 @@ import {
 import BrandBanner from "../../assets/LandingPage/BrandBanner.svg";
 
 const Marketing = () => {
+  const data = useContext(UserStoreData);
+
   async function copyTextToClipboard(text) {
     if ("clipboard" in navigator) {
       return await navigator.clipboard.writeText(text);
@@ -42,20 +45,24 @@ const Marketing = () => {
     <MarketingContainer>
       <Toaster position="top-center" />
       <CheckOutSection>
-        <h1>Check out Aashna Shroff's top pic for Myntra's Beauty Sale !</h1>
+        <h1>{data?.profileSection?.storeDescription}</h1>
       </CheckOutSection>
       <ThemeBrandBannerLogo src={BrandBanner} alt="brandBanner" />
-      <CouponContainer>
-        <div>
-          <h1>Get 20% off on your first order</h1>
-          <p>Use code FIRST20 to get 10% off </p>
-        </div>
-        <i
-          className="fa-regular fa-copy"
-          style={{ fontSize: "22px" }}
-          onClick={() => handleCopyClick("AZVY1234#")}
-        ></i>
-      </CouponContainer>
+      {data?.couponSection?.map((coupon, index) => {
+        return (
+          <CouponContainer key={index}>
+            <div>
+              <h1>{coupon?.title}</h1>
+              <p>{coupon?.description}</p>
+            </div>
+            <i
+              className="fa-regular fa-copy"
+              style={{ fontSize: "22px" }}
+              onClick={() => handleCopyClick(coupon?.code)}
+            ></i>
+          </CouponContainer>
+        );
+      })}
     </MarketingContainer>
   );
 };

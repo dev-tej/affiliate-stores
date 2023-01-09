@@ -1,4 +1,6 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
+import { useParams } from "react-router-dom";
+import { axiosInstance } from "../../../AxiosInstance";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import toast, { Toaster } from "react-hot-toast";
@@ -37,11 +39,12 @@ import {
 import Sheet from "react-modal-sheet";
 import SideBar from "../../../components/SideBar";
 import Spinner from "../../../components/Spinner/Spinner";
+import Loader from "../../../components/Loader";
 import Product1 from "../../../assets/NewLayout/Product1.svg";
 import Product2 from "../../../assets/NewLayout/Product2.svg";
 import Product3 from "../../../assets/NewLayout/Product3.svg";
 import Client from "shopify-buy";
-import { CarouselContainer, PostsContentImage } from "./Posts.components";
+// import { CarouselContainer, PostsContentImage } from "./Posts.components";
 
 const responsive = {
   superLargeDesktop: {
@@ -203,23 +206,32 @@ const SELECTED_PRODUCT_DATA = {
 };
 
 const Collections = () => {
-  // Initializing a client to return content in the store's primary language
   const client = Client.buildClient({
     domain: "galleri5.myshopify.com",
     storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
   });
-
-  // client.collection.fetchAllWithProducts().then((collections) => {
-  //   console.log(collections, "Collections");
-  // });
-
+  const { brand, slug, username } = useParams();
   const [loading, setLoading] = useState(false);
+  const [userCollectionData, setUserCollectionData] = useState([]);
+  const [selectedProductData, setSelectedProductData] = useState({});
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [titleReadMore, setTitleReadMore] = useState(false);
   const [descriptionReadMore, setDescriptionReadMore] = useState(false);
+
+  useEffect(() => {
+    let fetchUserPostsData = async () => {
+      setLoading(true);
+      let result = await axiosInstance.get(
+        `/${brand}/collections/${slug}/${username}`
+      );
+      setUserCollectionData(result?.data);
+      setLoading(false);
+    };
+    fetchUserPostsData();
+  }, [brand, slug, username]);
 
   const handleCloseSheet = () => {
     setOpen(false);
@@ -326,52 +338,56 @@ const Collections = () => {
   };
 
   return loading ? (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        background: "rgba(0, 0, 0, 0.5)",
-      }}
-    >
-      <Spinner loading={loading} />
-      <SpinnerInfoContainer>
-        <h1>Hang Tight!</h1>
-        <p>
-          You’re being redirected to another page, it may take upto 5 second
-        </p>
-      </SpinnerInfoContainer>
-    </div>
+    // <div
+    //   style={{
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     justifyContent: "flex-start",
+    //     alignItems: "flex-start",
+    //     background: "rgba(0, 0, 0, 0.5)",
+    //   }}
+    // >
+    //   <Spinner loading={loading} />
+    //   <SpinnerInfoContainer>
+    //     <h1>Hang Tight!</h1>
+    //     <p>
+    //       You’re being redirected to another page, it may take upto 5 second
+    //     </p>
+    //   </SpinnerInfoContainer>
+    // </div>
+    <Loader loading={loading} />
   ) : (
     <CartContext.Provider value={ADDED_TO_CART}>
       <Toaster position="top-center" />
       <CollectionContainer>
         <div>
-          {COLLECTION_DATA?.map((collection, index) => {
+          {userCollectionData?.map((collection, index) => {
             return (
               <div key={index}>
-                <CollectionTitle>{collection?.collectionName}</CollectionTitle>
+                <CollectionTitle>{collection?.title}</CollectionTitle>
                 <CollectionProductsContainer>
-                  {collection?.collectionProducts?.map((product, index) => {
+                  {collection?.meta?.map((product, index) => {
                     return (
                       <CollectionProductSection
                         key={index}
-                        thumbnail={product?.thumbnail}
+                        thumbnail={product?.image}
                       >
                         <CollectionProductsDisplay>
                           <CollectionProductsInfo>
                             <CollectionProductName>
-                              {product?.name?.substring(0, 20)}...
+                              {product?.description?.substring(0, 20)}...
                             </CollectionProductName>
                             <CollectionProductPrice>
                               {product?.price}
                             </CollectionProductPrice>
                           </CollectionProductsInfo>
                           <CollectionProductBuyNowButton
-                            onClick={() => setOpen(true)}
+                            onClick={() => {
+                              setOpen(true);
+                              setSelectedProductData(product);
+                            }}
                           >
-                            <p>BUY NOW</p>
+                            <p>{product?.urlText}</p>
                           </CollectionProductBuyNowButton>
                         </CollectionProductsDisplay>
                       </CollectionProductSection>
@@ -381,6 +397,7 @@ const Collections = () => {
               </div>
             );
           })}
+          {/* -------------------------------------------------------SELECTED PRODUCT DATA DISPLAY--------------------------------------------- */}
           <Sheet
             isOpen={open}
             onClose={() => setOpen(false)}
@@ -413,32 +430,30 @@ const Collections = () => {
                       infinite
                       // autoPlaySpeed={1000}
                     >
-                      {SELECTED_PRODUCT_DATA?.imageURLs?.map(
-                        (content, index) => {
-                          return (
-                            <div key={index}>
-                              <CollectionPostsContentImage src={content} />
-                            </div>
-                          );
-                        }
-                      )}
+                      {[selectedProductData?.image]?.map((content, index) => {
+                        return (
+                          <div key={index}>
+                            <CollectionPostsContentImage src={content} />
+                          </div>
+                        );
+                      })}
                     </Carousel>
                   </CollectionCarouselContainer>
                   <CollectionProductInfoSection>
                     <CollectionPriceContainer>
                       <CollectionPriceSection>
                         <CollectionMRP>
-                          &#8377;&nbsp;{SELECTED_PRODUCT_DATA?.mrp}
+                          &#8377;&nbsp;{selectedProductData?.mrp || ""}
                         </CollectionMRP>
                         <CollectionOriginalPrice>
-                          {SELECTED_PRODUCT_DATA?.originalPrice}
+                          {selectedProductData?.price}
                         </CollectionOriginalPrice>
                       </CollectionPriceSection>
                       <CollectionDiscountText>67% OFF</CollectionDiscountText>
                     </CollectionPriceContainer>
                     {titleReadMore ? (
                       <CollectionProductTitle>
-                        {SELECTED_PRODUCT_DATA?.title}&nbsp;&nbsp;
+                        {selectedProductData?.title}&nbsp;&nbsp;
                         <span
                           onClick={() => setTitleReadMore(!descriptionReadMore)}
                         >
@@ -447,7 +462,7 @@ const Collections = () => {
                       </CollectionProductTitle>
                     ) : (
                       <CollectionProductTitle>
-                        {SELECTED_PRODUCT_DATA?.title?.substring(0, 30)}
+                        {selectedProductData?.title?.substring(0, 30)}
                         ...&nbsp;&nbsp;
                         <span
                           onClick={() => setTitleReadMore(!descriptionReadMore)}
@@ -458,7 +473,7 @@ const Collections = () => {
                     )}
                     {descriptionReadMore ? (
                       <ProductDescription>
-                        {SELECTED_PRODUCT_DATA?.description}&nbsp;&nbsp;
+                        {selectedProductData?.description}&nbsp;&nbsp;
                         <span
                           onClick={() =>
                             setDescriptionReadMore(!descriptionReadMore)
@@ -469,7 +484,7 @@ const Collections = () => {
                       </ProductDescription>
                     ) : (
                       <ProductDescription>
-                        {SELECTED_PRODUCT_DATA?.description?.substring(0, 100)}
+                        {selectedProductData?.description?.substring(0, 100)}
                         ...&nbsp;&nbsp;
                         <span
                           onClick={() =>
@@ -500,52 +515,60 @@ const Collections = () => {
                         </button>
                       </QuantityContainer>
                     </div>
-                    <div style={{ marginLeft: "8px" }}>
-                      <ProductDetailsSizeHeader>Size</ProductDetailsSizeHeader>
-                      <ProductDetailsSizeContainer>
-                        {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
-                          return (
-                            <button
-                              key={index}
-                              className={
-                                selectedSize === size
-                                  ? "selectedContainer"
-                                  : "defaultContainer"
-                              }
-                              onClick={() => handleSizeChange(size)}
-                            >
-                              <p>{size}</p>
-                            </button>
-                          );
-                        })}
-                      </ProductDetailsSizeContainer>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: "12px",
-                        marginBottom: "30px",
-                        marginLeft: "8px",
-                      }}
-                    >
-                      <ProductDetailsSizeHeader>Color</ProductDetailsSizeHeader>
-                      <ProductDetailsSizeContainer>
-                        {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
-                          return (
-                            <button
-                              key={index}
-                              className={
-                                selectedColor === color
-                                  ? "selectedContainer"
-                                  : "defaultContainer"
-                              }
-                              onClick={() => handleColorChange(color)}
-                            >
-                              {color}
-                            </button>
-                          );
-                        })}
-                      </ProductDetailsSizeContainer>
-                    </div>
+                    {selectedProductData?.sizes?.length >= 1 && (
+                      <div style={{ marginLeft: "8px" }}>
+                        <ProductDetailsSizeHeader>
+                          Size
+                        </ProductDetailsSizeHeader>
+                        <ProductDetailsSizeContainer>
+                          {SELECTED_PRODUCT_DATA?.size?.map((size, index) => {
+                            return (
+                              <button
+                                key={index}
+                                className={
+                                  selectedSize === size
+                                    ? "selectedContainer"
+                                    : "defaultContainer"
+                                }
+                                onClick={() => handleSizeChange(size)}
+                              >
+                                <p>{size}</p>
+                              </button>
+                            );
+                          })}
+                        </ProductDetailsSizeContainer>
+                      </div>
+                    )}
+                    {selectedProductData?.colors?.length >= 1 && (
+                      <div
+                        style={{
+                          marginTop: "12px",
+                          marginBottom: "30px",
+                          marginLeft: "8px",
+                        }}
+                      >
+                        <ProductDetailsSizeHeader>
+                          Color
+                        </ProductDetailsSizeHeader>
+                        <ProductDetailsSizeContainer>
+                          {SELECTED_PRODUCT_DATA?.color?.map((color, index) => {
+                            return (
+                              <button
+                                key={index}
+                                className={
+                                  selectedColor === color
+                                    ? "selectedContainer"
+                                    : "defaultContainer"
+                                }
+                                onClick={() => handleColorChange(color)}
+                              >
+                                {color}
+                              </button>
+                            );
+                          })}
+                        </ProductDetailsSizeContainer>
+                      </div>
+                    )}
                   </CollectionProductInfoSection>
                 </ProductDetailsInfoSection>
               </SheetProductDisplay>
