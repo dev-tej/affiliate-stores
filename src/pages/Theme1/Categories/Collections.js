@@ -207,8 +207,8 @@ const SELECTED_PRODUCT_DATA = {
 
 const Collections = () => {
   const client = Client.buildClient({
-    domain: "g5-0-1.myshopify.com",
-    storefrontAccessToken: "5c9eec032ca6e13f2eec12c7788f18ee",
+    domain: "galleri5.myshopify.com",
+    storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
   });
   const { brand, slug, username } = useParams();
   const [loading, setLoading] = useState(false);
@@ -220,6 +220,7 @@ const Collections = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [titleReadMore, setTitleReadMore] = useState(false);
   const [descriptionReadMore, setDescriptionReadMore] = useState(false);
+  const [showBuyNow, setShowBuyNow] = useState(false);
 
   useEffect(() => {
     let fetchUserPostsData = async () => {
@@ -338,25 +339,36 @@ const Collections = () => {
     });
   };
 
-  return loading ? (
-    // <div
-    //   style={{
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     justifyContent: "flex-start",
-    //     alignItems: "flex-start",
-    //     background: "rgba(0, 0, 0, 0.5)",
-    //   }}
-    // >
-    //   <Spinner loading={loading} />
-    //   <SpinnerInfoContainer>
-    //     <h1>Hang Tight!</h1>
-    //     <p>
-    //       You’re being redirected to another page, it may take upto 5 second
-    //     </p>
-    //   </SpinnerInfoContainer>
-    // </div>
+  const RenderSpinner = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+          background: "rgba(0, 0, 0, 0.5)",
+        }}
+      >
+        <Spinner loading={loading} />
+        <SpinnerInfoContainer>
+          <h1>Hang Tight!</h1>
+          <p>
+            You’re being redirected to another page, it may take upto 5 second
+          </p>
+        </SpinnerInfoContainer>
+      </div>
+    );
+  };
+
+  const SPINNER_COMPONENT = showBuyNow ? (
+    RenderSpinner()
+  ) : (
     <Loader loading={loading} />
+  );
+
+  return loading ? (
+    SPINNER_COMPONENT
   ) : (
     <CartContext.Provider value={ADDED_TO_CART}>
       <Toaster position="top-center" />
@@ -585,6 +597,7 @@ const Collections = () => {
                 <BuyNowButton
                   onClick={() => {
                     setOpen(false);
+                    setShowBuyNow(!showBuyNow);
                     handleBuyNow();
                   }}
                 >

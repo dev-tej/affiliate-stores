@@ -5,6 +5,7 @@ export const PostHeaderSection = styled.div`
   justify-content: flex-start;
   align-items: center;
   column-gap: 12px;
+  margin-top: 30px;
 `;
 
 export const PostHeaderInfluencerDp = styled.img`

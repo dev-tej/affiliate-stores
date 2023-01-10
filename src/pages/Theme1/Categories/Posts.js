@@ -54,7 +54,7 @@ const PostsDisplay = ({ feedData }) => {
               </div>
               <div style={{ marginTop: "-8px" }}>
                 <PostHeaderInfluencerName>
-                  {data?.name}
+                  {data?.name || "Swagata Dev"}
                 </PostHeaderInfluencerName>
                 <PostHeaderInfluencerPostedHeader>
                   Posted on {moment(data?.createdAt).format("MMM DD YYYY")}
@@ -89,7 +89,7 @@ const PostsDisplay = ({ feedData }) => {
                   className="fa-solid fa-heart"
                   style={{ fontSize: "16px", color: "#ADADAD" }}
                 ></i>
-                <LikesHeader>{data?.likes} Likes</LikesHeader>
+                <LikesHeader>{data?.likes || 100} Likes</LikesHeader>
               </div>
               <div>
                 <i

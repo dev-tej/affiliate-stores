@@ -27,6 +27,7 @@ export const ThemeHighlightStoryContainer = styled.div`
   & img {
     width: 100% !important;
     height: 100% !important;
+    aspect-ratio: 1/1;
   }
 `;
 
@@ -46,7 +47,7 @@ export const InfluencerInfoContainer = styled.div`
   width: 100%;
   max-width: 480px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-end;
   background: linear-gradient(
     to top,

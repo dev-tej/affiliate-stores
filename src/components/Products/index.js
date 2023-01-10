@@ -16,13 +16,14 @@ const Products = (props) => {
         return (
           <ProductSection key={index} onClick={() => window.open(product?.url)}>
             <div>
-              <ProductImage src={product?.thumbnail} />
+              <ProductImage src={product?.image} />
             </div>
             <div>
-              <ProductName>{product?.tilte}</ProductName>
+              <ProductName>{product?.title}</ProductName>
               <ProductPrice>{product?.price}</ProductPrice>
               <ProductDiscountPercentage>
-                {product?.discount || product?.description}
+                {product?.discount?.substring(0, 30) ||
+                  product?.description?.substring(0, 30)}
               </ProductDiscountPercentage>
             </div>
           </ProductSection>
