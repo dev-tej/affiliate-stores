@@ -207,8 +207,8 @@ const SELECTED_PRODUCT_DATA = {
 
 const Collections = () => {
   const client = Client.buildClient({
-    domain: "galleri5.myshopify.com",
-    storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
+    domain: "g5-0-1.myshopify.com",
+    storefrontAccessToken: "5c9eec032ca6e13f2eec12c7788f18ee",
   });
   const { brand, slug, username } = useParams();
   const [loading, setLoading] = useState(false);
@@ -329,6 +329,7 @@ const Collections = () => {
         client.checkout
           .addLineItems(checkoutID, lineItemsToAdd)
           .then((checkout) => {
+            console.log(checkout, "Checkout");
             setLoading(false);
             // window.location.pathname(checkout?.webUrl);
             window.open(checkout?.webUrl);
