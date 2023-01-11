@@ -4,34 +4,35 @@ import {
   DevelopmentHighlightStories,
 } from "components/HighlightStories";
 import toast, { Toaster } from "react-hot-toast";
-import Highlight1 from "assets/Theme1/Highlight1.jpg";
-import Highlight2 from "assets/Theme1/Highlight2.jpg";
+// import Highlight1 from "assets/Theme1/Highlight1.jpg";
+// import Highlight2 from "assets/Theme1/Highlight2.jpg";
 import BrandBanner from "assets/LandingPage/BrandBanner.svg";
+import numeral from "numeral";
 
-const HIGHLIGHTS_STORIES = [
-  {
-    content: () => {
-      return (
-        <video controls autoPlay muted className="highlightVideo">
-          <source
-            src="https://gallerify.s3.us-west-2.amazonaws.com/stores/video/highlight.mp4"
-            type="video/mp4"
-          />
-        </video>
-      );
-    },
-  },
-  {
-    content: () => {
-      return <img src={Highlight1} alt="img" className="highlightImage" />;
-    },
-  },
-  {
-    content: () => {
-      return <img src={Highlight2} alt="img" className="highlightImage" />;
-    },
-  },
-];
+// const HIGHLIGHTS_STORIES = [
+//   {
+//     content: () => {
+//       return (
+//         <video controls autoPlay muted className="highlightVideo">
+//           <source
+//             src="https://gallerify.s3.us-west-2.amazonaws.com/stores/video/highlight.mp4"
+//             type="video/mp4"
+//           />
+//         </video>
+//       );
+//     },
+//   },
+//   {
+//     content: () => {
+//       return <img src={Highlight1} alt="img" className="highlightImage" />;
+//     },
+//   },
+//   {
+//     content: () => {
+//       return <img src={Highlight2} alt="img" className="highlightImage" />;
+//     },
+//   },
+// ];
 
 const COLLECTION_IMAGES = [
   {
@@ -61,7 +62,9 @@ const COLLECTION_IMAGES = [
   },
 ];
 
-const HighlightSection = () => {
+const HighlightSection = (props) => {
+  const { data } = props;
+
   async function copyTextToClipboard(text) {
     if ("clipboard" in navigator) {
       return await navigator.clipboard.writeText(text);
@@ -90,26 +93,60 @@ const HighlightSection = () => {
         console.log(err);
       });
   };
+
+  const HIGHLIGHTS = data?.profileSection?.images?.map((val) => ({
+    content: () => {
+      return (
+        <>
+          {val?.includes("mp4") ? (
+            <video controls autoPlay muted className="highlightVideo">
+              <source src={val} type="video/mp4" />
+            </video>
+          ) : (
+            <img src={val} alt="img" className="highlightImage" />
+          )}
+        </>
+      );
+    },
+  }));
+
   return (
     <div>
       <Toaster position="top-center" />
       {!process.env.NODE_ENV || process.env.NODE_ENV === "development" ? (
         <div>
           <div id="highlightContainer">
-            <DevelopmentHighlightStories highlights={HIGHLIGHTS_STORIES} />
+            {data?.profileSection?.images?.length >= 1 && (
+              <DevelopmentHighlightStories highlights={HIGHLIGHTS} />
+            )}
             <div className="influencerInfoContainer">
               <div>
-                <h1 className="influencerName">Aashna Shroff</h1>
-                <h2 className="influencerUserName">@aashnashroff</h2>
+                <h1 className="influencerName">{data?.profileSection?.name}</h1>
+                <h2 className="influencerUserName">
+                  @{data?.profileSection?.username}
+                </h2>
                 <div className="influencerExtraInfo">
-                  <h1 className="influencerFollowersCount">12k Followers</h1>
+                  {data?.profileSection?.followers >= 1000 ? (
+                    <h1 className="influencerFollowersCount">
+                      {numeral(data?.profileSection?.followers)
+                        .format("0a")
+                        .toUpperCase()}{" "}
+                      Followers
+                    </h1>
+                  ) : (
+                    <h1 className="influencerFollowersCount">
+                      {data?.profileSection?.followers} Followers
+                    </h1>
+                  )}
                   <div className="dotContainer"></div>
-                  <h1 className="influencerCollectionCount">12 Collections</h1>
+                  <h1 className="influencerCollectionCount">
+                    {data?.profileSection?.collections} Collections
+                  </h1>
                 </div>
               </div>
               <div>
                 <div className="influencerCollectionImagesDisplay">
-                  {COLLECTION_IMAGES?.map((pic, index) => {
+                  {data?.profileSection?.products?.map((pic, index) => {
                     return (
                       <img
                         src={pic?.image}
@@ -120,53 +157,74 @@ const HighlightSection = () => {
                     );
                   })}
                 </div>
-                <h1 className="noOfProducts">31+ Products</h1>
+                <h1 className="noOfProducts">
+                  {data?.profileSection?.products?.length}+ Products
+                </h1>
               </div>
             </div>
           </div>
           <div className="descriptionContainer">
             <h1 className="descriptionHeader">
-              Check out Aashna Shroff's top pic for Myntra's Beauty Sale !
+              {data?.profileSection?.storeDescription}
             </h1>
             <img
               src={BrandBanner}
               alt="themeBanner"
               className="brandBannerImage"
             />
-            <div className="discountContainer">
-              <div>
-                <h1 className="discountContainerHeader">
-                  Get 20% off on your first order
-                </h1>
-                <p className="discountContainerText">
-                  Use code FIRST20 to get 10% off{" "}
-                </p>
-              </div>
-              <i
-                className="fa-regular fa-copy"
-                style={{ fontSize: "22px" }}
-                onClick={() => handleCopyClick("AZVY1234#")}
-              ></i>
-            </div>
+            {data?.couponSection?.map((coupon, index) => {
+              return (
+                <div className="discountContainer" key={index}>
+                  <div>
+                    <h1 className="discountContainerHeader">{coupon?.title}</h1>
+                    <p className="discountContainerText">
+                      {coupon?.description}
+                    </p>
+                  </div>
+                  <i
+                    className="fa-regular fa-copy"
+                    style={{ fontSize: "22px" }}
+                    onClick={() => handleCopyClick(coupon?.code)}
+                  ></i>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (
         <div>
           <div id="highlightContainer">
-            <ProductionHighlightStories highlights={HIGHLIGHTS_STORIES} />
+            {data?.profileSection?.images?.length >= 1 && (
+              <ProductionHighlightStories highlights={HIGHLIGHTS} />
+            )}
             <div className="influencerInfoContainer">
               <div>
-                <h1 className="influencerName">Aashna Shroff</h1>
-                <h2 className="influencerUserName">@aashnashroff</h2>
+                <h1 className="influencerName">{data?.profileSection?.name}</h1>
+                <h2 className="influencerUserName">
+                  @{data?.profileSection?.username}
+                </h2>
                 <div className="influencerExtraInfo">
-                  <h1 className="influencerFollowersCount">12k Followers</h1>
+                  {data?.profileSection?.followers >= 1000 ? (
+                    <h1 className="influencerFollowersCount">
+                      {numeral(data?.profileSection?.followers)
+                        .format("0a")
+                        .toUpperCase()}{" "}
+                      Followers
+                    </h1>
+                  ) : (
+                    <h1 className="influencerFollowersCount">
+                      {data?.profileSection?.followers} Followers
+                    </h1>
+                  )}
                   <div className="dotContainer"></div>
-                  <h1 className="influencerCollectionCount">12 Collections</h1>
+                  <h1 className="influencerCollectionCount">
+                    {data?.profileSection?.collections} Collections
+                  </h1>
                 </div>
               </div>
               <div>
                 <div className="influencerCollectionImagesDisplay">
-                  {COLLECTION_IMAGES?.map((pic, index) => {
+                  {data?.profileSection?.products?.map((pic, index) => {
                     return (
                       <img
                         src={pic?.image}
@@ -177,34 +235,38 @@ const HighlightSection = () => {
                     );
                   })}
                 </div>
-                <h1 className="noOfProducts">31+ Products</h1>
+                <h1 className="noOfProducts">
+                  {data?.profileSection?.products?.length}+ Products
+                </h1>
               </div>
             </div>
           </div>
           <div className="descriptionContainer">
             <h1 className="descriptionHeader">
-              Check out Aashna Shroff's top pic for Myntra's Beauty Sale !
+              {data?.profileSection?.storeDescription}
             </h1>
             <img
               src={BrandBanner}
               alt="themeBanner"
               className="brandBannerImage"
             />
-            <div className="discountContainer">
-              <div>
-                <h1 className="discountContainerHeader">
-                  Get 20% off on your first order
-                </h1>
-                <p className="discountContainerText">
-                  Use code FIRST20 to get 10% off{" "}
-                </p>
-              </div>
-              <i
-                className="fa-regular fa-copy"
-                style={{ fontSize: "22px" }}
-                onClick={() => handleCopyClick("AZVY1234#")}
-              ></i>
-            </div>
+            {data?.couponSection?.map((coupon, index) => {
+              return (
+                <div className="discountContainer" key={index}>
+                  <div>
+                    <h1 className="discountContainerHeader">{coupon?.title}</h1>
+                    <p className="discountContainerText">
+                      {coupon?.description}
+                    </p>
+                  </div>
+                  <i
+                    className="fa-regular fa-copy"
+                    style={{ fontSize: "22px" }}
+                    onClick={() => handleCopyClick(coupon?.code)}
+                  ></i>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

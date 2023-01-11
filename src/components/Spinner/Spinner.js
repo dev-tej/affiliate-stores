@@ -8,6 +8,7 @@ const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #11100d;
 `;
 
 const override = css`
@@ -15,6 +16,7 @@ const override = css`
   border-color: #ffc323;
   display: grid;
   place-items: center;
+  background: #11100d;
 `;
 
 const Spinner = (props) => {

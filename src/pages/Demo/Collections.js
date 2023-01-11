@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import BuyNow from "./BuyNow";
+import { client } from "services/ShopifyClient";
 import { CollectionProductsDisplaySection } from "./Demo.components";
 
 const Collections = (props) => {
   const { data } = props;
   const [selectedProduct, setSelectedProduct] = useState({});
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
+  const [variants, setVariants] = useState([]);
 
   const handleSheetClose = () => {
     setBottomSheetOpen(false);
+  };
+
+  const getVariants = (prodId) => {
+    const productId = `gid://shopify/Product/${prodId}`;
+    client.product.fetch(productId).then((product) => {
+      setVariants(product?.variants);
+    });
   };
 
   return (
@@ -35,6 +44,7 @@ const Collections = (props) => {
                           onClick={() => {
                             setSelectedProduct(product);
                             setBottomSheetOpen(!bottomSheetOpen);
+                            getVariants(product?.id);
                           }}
                         >
                           <p>Buy Now</p>
@@ -52,6 +62,7 @@ const Collections = (props) => {
         selectedProduct={selectedProduct}
         open={bottomSheetOpen}
         onClose={handleSheetClose}
+        variants={variants}
       />
     </>
   );

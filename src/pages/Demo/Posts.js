@@ -40,7 +40,7 @@ const FeedDisplay = ({ feedData }) => {
               </div>
               <div className="postInfluencerInfoContainer">
                 <h1 className="influencerName">
-                  {data?.name || "Aashna Shroff"}
+                  {data?.name || data?.username}
                 </h1>
                 <h2 className="influencerContentPostedDate">
                   Posted on {moment(data?.createdAt).format("DD MMMM")}

@@ -3,7 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import toast, { Toaster } from "react-hot-toast";
 import Sheet from "react-modal-sheet";
-import Client from "shopify-buy";
+import { client } from "services/ShopifyClient";
 import Spinner from "components/Spinner/Spinner";
 
 const responsive = {
@@ -25,62 +25,58 @@ const responsive = {
   },
 };
 
-const PRODUCT_SIZES = [
-  {
-    id: 0,
-    isSizeAvailable: true,
-    title: "XS",
-  },
-  {
-    id: 1,
-    isSizeAvailable: true,
-    title: "S",
-  },
-  {
-    id: 2,
-    isSizeAvailable: true,
-    title: "M",
-  },
-  {
-    id: 3,
-    isSizeAvailable: false,
-    title: "L",
-  },
-];
+// const PRODUCT_SIZES = [
+//   {
+//     id: 0,
+//     isSizeAvailable: true,
+//     title: "XS",
+//   },
+//   {
+//     id: 1,
+//     isSizeAvailable: true,
+//     title: "S",
+//   },
+//   {
+//     id: 2,
+//     isSizeAvailable: true,
+//     title: "M",
+//   },
+//   {
+//     id: 3,
+//     isSizeAvailable: false,
+//     title: "L",
+//   },
+// ];
 
-const PRODUCT_COLORS = [
-  {
-    id: 0,
-    isColorAvailable: true,
-    title: "Blue",
-  },
-  {
-    id: 1,
-    isColorAvailable: true,
-    title: "Red",
-  },
-  {
-    id: 2,
-    isColorAvailable: false,
-    title: "White",
-  },
-];
+// const PRODUCT_COLORS = [
+//   {
+//     id: 0,
+//     isColorAvailable: true,
+//     title: "Blue",
+//   },
+//   {
+//     id: 1,
+//     isColorAvailable: true,
+//     title: "Red",
+//   },
+//   {
+//     id: 2,
+//     isColorAvailable: false,
+//     title: "White",
+//   },
+// ];
 
 const BuyNow = (props) => {
-  const { selectedProduct, open, onClose } = props;
-
-  const client = Client.buildClient({
-    domain: "galleri5.myshopify.com",
-    storefrontAccessToken: "0b231b7dd203ed99cbfad0f7bfaefa9f",
-  });
+  const { selectedProduct, open, onClose, variants } = props;
 
   const [loading, setLoading] = useState(false);
   const [titleReadMore, setTitleReadMore] = useState(false);
   const [descriptionReadMore, setDescriptionReadMore] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
+  // const [selectedSize, setSelectedSize] = useState("");
+  // const [selectedColor, setSelectedColor] = useState("");
   const [addToCartProducts, setAddToCartProducts] = useState([]);
+  const [selectedVariant, setSelectedVariant] = useState("");
 
   const handleAddToCartProducts = () => {
     let temp = [...addToCartProducts];
@@ -107,17 +103,18 @@ const BuyNow = (props) => {
 
   const handleCloseSheet = () => {
     setSelectedQuantity(1);
-    setSelectedSize("");
-    setSelectedColor("");
+    // setSelectedSize("");
+    // setSelectedColor("");
+    setSelectedVariant("");
   };
 
-  const handleSizeChange = (val) => {
-    setSelectedSize(val);
-  };
+  // const handleSizeChange = (val) => {
+  //   setSelectedSize(val);
+  // };
 
-  const handleColorChange = (val) => {
-    setSelectedColor(val);
-  };
+  // const handleColorChange = (val) => {
+  //   setSelectedColor(val);
+  // };
 
   function previousQuantity() {
     setSelectedQuantity((prevPage) => prevPage - 1);
@@ -127,26 +124,28 @@ const BuyNow = (props) => {
     setSelectedQuantity((prevPage) => prevPage + 1);
   }
 
-  const handleBuyNow = (prodId) => {
+  const SELECTED_PRODUCT_VARIANTS = variants?.map((variant) => variant?.title);
+  const SELECTED_PRODUCT_VARIANT_ID = variants?.find(
+    (variant) => variant?.title === selectedVariant
+  );
+
+  const handleBuyNow = () => {
     setLoading(true);
     client.checkout.create().then((checkout) => {
       const checkoutID = checkout?.id;
-      const productId = `gid://shopify/Product/${prodId}`;
-      client.product.fetch(productId).then((product) => {
-        const lineItemsToAdd = [
-          {
-            variantId: product?.variants?.[0]?.id,
-            quantity: selectedQuantity,
-            customAttributes: [],
-          },
-        ];
-        client.checkout
-          .addLineItems(checkoutID, lineItemsToAdd)
-          .then((checkout) => {
-            setLoading(false);
-            window.open(checkout?.webUrl);
-          });
-      });
+      const lineItemsToAdd = [
+        {
+          variantId: SELECTED_PRODUCT_VARIANT_ID?.id,
+          quantity: selectedQuantity,
+          customAttributes: [],
+        },
+      ];
+      client.checkout
+        .addLineItems(checkoutID, lineItemsToAdd)
+        .then((checkout) => {
+          setLoading(false);
+          window.open(checkout?.webUrl);
+        });
     });
   };
 
@@ -157,7 +156,7 @@ const BuyNow = (props) => {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "flex-start",
-        background: "rgba(0, 0, 0, 0.5)",
+        background: "#11100d",
       }}
     >
       <Spinner loading={loading} />
@@ -194,7 +193,14 @@ const BuyNow = (props) => {
                 handleCloseSheet();
               }}
             >
-              <i className="fas fa-times" style={{ color: "#595656" }}></i>
+              <i
+                className="fas fa-times"
+                style={{ color: "#595656" }}
+                onClick={() => {
+                  onClose();
+                  handleCloseSheet();
+                }}
+              ></i>
             </div>
             {/* Image Carousel */}
             <div className="productDetailsInfoSection">
@@ -230,9 +236,9 @@ const BuyNow = (props) => {
                     {selectedProduct?.originalPrice}
                   </h1>
                 </div>
-                <h1 className="selectedProductDiscountHeader">
+                {/* <h1 className="selectedProductDiscountHeader">
                   {selectedProduct?.discount || "67% off"}
-                </h1>
+                </h1> */}
               </div>
               {/* Product Title & Description */}
               <div>
@@ -303,33 +309,26 @@ const BuyNow = (props) => {
                   </div>
                 </div>
                 <div className="selectedProductDefaultContainer">
-                  <h1 className="defaultHeaderText">Size</h1>
                   <div className="defaultProductContainer">
-                    {PRODUCT_SIZES?.map((size, index) => {
+                    {SELECTED_PRODUCT_VARIANTS?.map((variant, index) => {
                       return (
                         <div key={index}>
-                          {size?.isSizeAvailable ? (
-                            <button
-                              onClick={() => handleSizeChange(size)}
-                              className={
-                                selectedSize === size
-                                  ? "selectedProductCategory"
-                                  : "defaultProductCategory"
-                              }
-                            >
-                              <p>{size?.title}</p>
-                            </button>
-                          ) : (
-                            <button className="notAvailableProductCategory">
-                              <p>{size?.title}</p>
-                            </button>
-                          )}
+                          <button
+                            onClick={() => setSelectedVariant(variant)}
+                            className={
+                              selectedVariant === variant
+                                ? "selectedProductCategory"
+                                : "defaultProductCategory"
+                            }
+                          >
+                            <p>{variant}</p>
+                          </button>
                         </div>
                       );
                     })}
                   </div>
                 </div>
-                <div className="selectedProductDefaultContainer">
+                {/* <div className="selectedProductDefaultContainer">
                   <h1 className="defaultHeaderText">Color</h1>
                   <div className="defaultProductContainer">
                     {PRODUCT_COLORS?.map((color, index) => {
@@ -355,7 +354,7 @@ const BuyNow = (props) => {
                       );
                     })}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="actionButtonsContainer">
