@@ -15,7 +15,7 @@ export const ProductSection = styled.div`
   display: flex;
   justify-content: flex-start;
   column-gap: 12px;
-  align-items: center;
+  align-items: flex-start;
   padding: 8px 12px;
   gap: 12px;
   width: 192px;
@@ -30,22 +30,27 @@ export const ProductImage = styled.img`
 `;
 
 export const ProductName = styled.h1`
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  color: #c9c3c3;
-  margin-bottom: -5px;
+  line-height: 16px;
+  color: #dedede;
 `;
 
 export const ProductPrice = styled.p`
+  margin-top: 4px;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  color: #c9c3c3;
-  margin-bottom: -2px;
+  line-height: 16px;
+  color: #dedede;
 `;
 
 export const ProductDiscountPercentage = styled.h1`
+  margin-top: 4px;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 10px;

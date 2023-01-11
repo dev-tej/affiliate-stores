@@ -37,7 +37,7 @@ import {
   SpinnerInfoContainer,
 } from "./Collections.components";
 import Sheet from "react-modal-sheet";
-import SideBar from "../../../components/SideBar";
+// import SideBar from "../../../components/SideBar";
 import Spinner from "../../../components/Spinner/Spinner";
 import Loader from "../../../components/Loader";
 import Product1 from "../../../assets/NewLayout/Product1.svg";
@@ -607,12 +607,12 @@ const Collections = () => {
             </Sheet.Container>
           </Sheet>
         </div>
-        <SideBar
+        {/* <SideBar
           data={SELECTED_PRODUCT_DATA}
           quantity={quantity}
           size={selectedSize}
           color={selectedColor}
-        />
+        /> */}
       </CollectionContainer>
     </CartContext.Provider>
   );

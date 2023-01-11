@@ -42,9 +42,10 @@ export const ThemeHighlightVideoDisplay = styled.video`
 `;
 
 export const InfluencerInfoContainer = styled.div`
-  position: absolute;
-  margin-top: -90px;
+  // position: absolute;
+  // margin-top: -90px;
   width: 100%;
+  padding: 10px;
   max-width: 480px;
   display: flex;
   justify-content: space-between;

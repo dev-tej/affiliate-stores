@@ -19,11 +19,10 @@ const Products = (props) => {
               <ProductImage src={product?.image} />
             </div>
             <div>
-              <ProductName>{product?.title}</ProductName>
-              <ProductPrice>{product?.price}</ProductPrice>
+              <ProductName>{product?.title?.substring(0, 15)}...</ProductName>
+              <ProductPrice>&#8377;&nbsp;{product?.price}</ProductPrice>
               <ProductDiscountPercentage>
-                {product?.discount?.substring(0, 30) ||
-                  product?.description?.substring(0, 30)}
+                {product?.discount || "67% OFF"}
               </ProductDiscountPercentage>
             </div>
           </ProductSection>

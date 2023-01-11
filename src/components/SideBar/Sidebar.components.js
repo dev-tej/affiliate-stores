@@ -145,7 +145,7 @@ export const FixedContainer = styled.div`
 
 export const SubtotalContainer = styled.div`
   margin-bottom: 10px;
-  width: 90%;
+  width: 100%;
 `;
 
 export const SubtotalSection = styled.div`
@@ -172,7 +172,8 @@ export const SubtotalDescription = styled.h1`
 
 export const CheckoutButton = styled.button`
   margin-top: 10px;
-  width: 85%;
+  width: 100%;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,11 +197,12 @@ export const CartLengthHeader = styled.p`
 `;
 
 export const AddedCartProducts = styled.div`
-  width: 90%;
+  width: 100%;
   padding: 15px;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
+  display: flex;
+  // display: grid;
+  // grid-auto-flow: column;
+  // align-items: center;
   column-gap: 20px;
 `;
 
@@ -212,11 +214,11 @@ export const AddedCartImage = styled.img`
 `;
 
 export const AddedCartProductInfo = styled.div`
-  width: 100%;
+  width: 100% !important;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: space-between !important;
   column-gap: 25px;
+  margin-bottom: 30px;
 
   & h1 {
     font-style: normal;

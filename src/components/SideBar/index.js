@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { CartContext } from "../../pages/Theme1/Categories/Collections";
+import React, { useState, useEffect, useRef } from "react";
 import Client from "shopify-buy";
 import {
   HamburgerButtonContainer,
@@ -24,11 +23,11 @@ import {
 } from "./Sidebar.components";
 import EmptyCart from "../../assets/Theme1/EmptyCart.svg";
 
-const SideBar = (props) => {
-  const { size, color, quantity, data } = props;
+const SideBar = () => {
+  const data = JSON.parse(localStorage?.getItem("addedToCartProducts"));
   const [openDrawer, toggleDrawer] = useState(false);
   const drawerRef = useRef(null);
-  const [selectedQuantity, setSelectedQuantity] = useState(quantity);
+  const [selectedQuantity, setSelectedQuantity] = useState(data?.quantity);
 
   useEffect(() => {
     const closeDrawer = (event) => {
@@ -55,10 +54,10 @@ const SideBar = (props) => {
     setSelectedQuantity((prevPage) => prevPage + 1);
   }
 
-  const handleBuyNow = () => {
+  const handleBuyNow = (prodId) => {
     client.checkout.create().then((checkout) => {
       const checkoutID = checkout?.id;
-      const productId = "gid://shopify/Product/8069698126116";
+      const productId = `gid://shopify/Product/${prodId}`;
       client.product.fetch(productId).then((product) => {
         const lineItemsToAdd = [
           {
@@ -76,19 +75,15 @@ const SideBar = (props) => {
     });
   };
 
-  const CART_LENGTH =
-    JSON.parse(localStorage?.getItem("addedToCartData")) !== null
-      ? JSON.parse(localStorage?.getItem("addedToCartData"))?.length
-      : 0;
+  const CART_LENGTH = data !== null ? data?.length : 0;
 
-  const CART_DATA =
-    JSON.parse(localStorage?.getItem("addedToCartData")) !== null
-      ? JSON.parse(localStorage?.getItem("addedToCartData"))
-      : [];
+  const TOTAL_CART_VALUE = data
+    ?.map((prod) => prod?.product?.price)
+    ?.reduce((partialSum, a) => partialSum + a, 0);
 
   return (
     <div>
-      {CART_LENGTH?.length >= 1 ? (
+      {data?.length >= 1 ? (
         <div>
           <HamburgerButtonContainer>
             <i
@@ -104,19 +99,19 @@ const SideBar = (props) => {
               <SideBarClose onClick={() => toggleDrawer(false)}>X</SideBarClose>
             </SettingsSection>
             <HorizontalLine />
-            {CART_DATA?.map((prod, index) => {
+            {data?.map((prod, index) => {
               return (
                 <AddedCartProducts key={index}>
                   <div>
                     <AddedCartImage
-                      src={prod?.imageURLs?.[0]}
+                      src={prod?.product?.image}
                       alt="addedProduct"
                     />
                   </div>
-                  <div>
+                  <div style={{ width: "100%" }}>
                     <AddedCartProductInfo>
-                      <h1>{prod?.title}</h1>
-                      <h1>&#8377;{prod?.mrp}</h1>
+                      <h1>{prod?.product?.title}</h1>
+                      <h1>&#8377;{prod?.product?.price}</h1>
                     </AddedCartProductInfo>
                     <div
                       style={{
@@ -126,7 +121,7 @@ const SideBar = (props) => {
                       }}
                     >
                       <QuantityContainer>
-                        {quantity <= 1 ? (
+                        {prod?.quantity <= 1 ? (
                           <button>
                             <p>-</p>
                           </button>
@@ -135,7 +130,7 @@ const SideBar = (props) => {
                             <p>-</p>
                           </button>
                         )}
-                        <QuantityValue>{quantity}</QuantityValue>
+                        <QuantityValue>{prod?.quantity}</QuantityValue>
                         <button onClick={nextQuantity}>
                           <p>+</p>
                         </button>
@@ -153,7 +148,7 @@ const SideBar = (props) => {
               <SubtotalContainer>
                 <SubtotalSection>
                   <SubtotlHeader>Subtotal</SubtotlHeader>
-                  <SubtotlHeader>&#8377;&nbsp;{data?.mrp}</SubtotlHeader>
+                  <SubtotlHeader>&#8377;&nbsp;{TOTAL_CART_VALUE}</SubtotlHeader>
                 </SubtotalSection>
                 <SubtotalDescription>
                   Shipping, taxes, and discount codes calculated at checkout.

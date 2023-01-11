@@ -1,0 +1,740 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#demoContainer {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background: #11100d;
+  margin-bottom: -100px;
+  padding-bottom: 100px;
+  font-family: "Roboto";
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#highlightContainer {
+  position: relative;
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 0.7) 14.58%,
+    rgba(0, 0, 0, 0) 60.42%
+  ) !important;
+}
+
+.highlightVideo {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover !important;
+  opacity: 0.7;
+}
+
+.highlightVideo::-webkit-media-controls-panel {
+  display: none !important;
+  opacity: 1 !important;
+}
+
+.highlightImage {
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0.7;
+}
+
+.influencerInfoContainer {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: -110px;
+  position: absolute;
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 0.7) 14.58%,
+    rgba(0, 0, 0, 0) 60.42%
+  );
+}
+
+.influencerName {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  /* color: #bfbfbf; */
+  color: #d9d9d9;
+}
+
+.influencerUserName {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  /* color: #949398; */
+  color: #d9d9d9;
+}
+
+.influencerExtraInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 8px;
+  margin-top: 8px;
+}
+
+.influencerFollowersCount {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  /* color: #bfbfbf; */
+  color: #d9d9d9;
+}
+
+.dotContainer {
+  width: 2px;
+  height: 2px;
+  background: #d9d9d9;
+}
+
+.influencerCollectionCount {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  /* color: #bfbfbf; */
+  color: #d9d9d9;
+}
+
+.influencerCollectionImagesDisplay {
+  display: flex;
+}
+
+.collectionImage {
+  width: 20px;
+  height: 20px;
+  border-radius: 64px;
+  margin-left: -5px;
+}
+
+.noOfProducts {
+  margin-top: 12px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  /* color: #bfbfbf; */
+  color: #d9d9d9;
+}
+
+.descriptionContainer {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.descriptionHeader {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  margin-left: 24px;
+  margin-right: 22px;
+  margin-bottom: 16px;
+  color: rgba(255, 245, 209, 0.9);
+}
+
+.brandBannerImage {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+}
+
+.discountContainer {
+  width: 90%;
+  max-width: 480px;
+  height: 64px;
+  background: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px auto;
+  padding: 14px;
+}
+
+.discountContainerHeader {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129.28%;
+  color: #505050;
+}
+
+.discountContainerText {
+  margin-top: 6px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 118.36%;
+  color: #505050;
+}
+
+.postsContentContainer {
+  margin-top: 40px;
+}
+
+.postsHeaderSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center !important;
+  column-gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.influencerDp {
+  width: 36px;
+  height: 36px;
+}
+
+.postInfluencerInfoContainer {
+  margin-top: -5px;
+}
+
+.influencerName {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #dedede;
+}
+
+.influencerContentPostedDate {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #999999;
+}
+
+.InfluencerPosts_customDots > li > button {
+  background-color: #616e7c !important;
+  border-color: #616e7c !important;
+  border: none !important;
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.InfluencerPosts_customDots > .react-multi-carousel-dot--active > button {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  border: none !important;
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.InfluencerPosts_customDots > .react-multi-carousel-dot {
+  margin-top: 100px !important;
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.react-multi-carousel-track {
+  margin-bottom: 20px !important;
+}
+
+.influencerPostsContentImage {
+  width: 100%;
+  height: 246px;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+}
+
+.postsImpressionContainer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.postsLikesContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.postsContentLikes {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #dedede;
+}
+
+.postsDescriptionContainer {
+  margin-top: 16px;
+}
+
+.postsDescriptionContainer p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #8c8888;
+}
+
+.postsDescriptionContainer span {
+  font-weight: bolder;
+}
+
+.horizontalLine {
+  margin-top: 20px;
+  width: 100%;
+  height: 0;
+  border: 1px solid #a3a3a3;
+  opacity: 0.3;
+  padding: 0 !important;
+}
+
+.collectionTitle {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #bfbfbf;
+}
+
+.collectionsProductContainer {
+  margin-top: 16px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 16px;
+  overflow-x: scroll;
+}
+
+.collectionsProductContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.collectionProductsDisplay {
+  width: 100%;
+  padding: 12px;
+  /* background: linear-gradient(
+    0.3deg,
+    rgba(0, 0, 0, 0.84) 21.46%,
+    rgba(0, 0, 0, 0) 50.27%
+  ); */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.84) 50.46%,
+    rgba(0, 0, 0, 0) 100.27%
+  );
+  position: absolute;
+  bottom: 0;
+  margin-bottom: -1px;
+}
+
+.productTitle {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 17px;
+  background: linear-gradient(137.45deg, #fffbed 2.5%, #feeeb2 105.48%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.productPriceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productPrice {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  background: linear-gradient(137.45deg, #fffbed 2.5%, #feeeb2 105.48%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.productBuyNow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 5px 10px;
+  gap: 8px;
+  width: auto;
+  height: 22px;
+  background: #ffb546;
+  border-radius: 77px;
+  border: none;
+  outline: none;
+}
+
+.productBuyNow p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #000000;
+}
+
+.sheetProductDisplay {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.sheetProductDisplay::-webkit-scrollbar {
+  display: none;
+}
+
+.collectionSheetCloseContainer {
+  position: absolute;
+  z-index: 999999999;
+  right: 0;
+  margin-right: 23px;
+  margin-top: 14px;
+  width: 24.17px;
+  height: 24.17px;
+  background: #fff;
+  border-radius: 4000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productDetailsInfoSection {
+  width: 100%;
+  margin-top: -5px;
+  position: relative;
+}
+
+.collectionPostContentImage {
+  width: 100%;
+  height: 360px;
+  object-fit: fill;
+  border-bottom: 1px solid #8c8888;
+}
+
+.actionButtonsContainer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #11100d;
+}
+
+.addToBagBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 8px;
+  width: auto;
+  height: 51px;
+  border: 1px solid #ffb546;
+  border-radius: 77px;
+  outline: none;
+  background: transparent;
+}
+
+.addToBagBtn p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #dedede;
+}
+
+.buyNowBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 8px;
+  width: auto;
+  height: 51px;
+  background: #ffb546;
+  border-radius: 77px;
+  border: none;
+  outline: none;
+}
+
+.buyNowBtn p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+}
+
+.selectedProductInfoContainer {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+}
+
+.selectedProductPriceSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.selectedProductPriceDisplay {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 16px;
+  letter-spacing: 0.03em;
+  color: #dedede;
+}
+
+.selectedProductOriginalPriceDisplay {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-decoration-line: line-through;
+  color: #999999;
+}
+
+.selectedProductDiscountHeader {
+  margin-top: 8px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #e3bf35;
+}
+
+.selectedProductTitle {
+  margin-top: 8px;
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #dedede;
+}
+
+.selectedProductTitle span {
+  color: #fff;
+  font-weight: bolder;
+}
+
+.selectedProductDescription {
+  margin-top: 8px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #999999;
+}
+
+.selectedProductDescription span {
+  color: #fff;
+  font-weight: bolder;
+}
+
+.selectedProductDefaultContainer {
+  margin-top: 20px;
+}
+
+.defaultHeaderText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #c9c3c3;
+}
+
+.defaultProductContainer {
+  width: 20%;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 12px;
+  margin-top: 12px;
+}
+
+.defaultProductCategory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  gap: 10px;
+  width: 54px;
+  height: 26px;
+  border: 1px solid #c9c3c3;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.defaultProductCategory p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #c9c3c3;
+}
+
+.selectedProductCategory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  gap: 10px;
+  width: 54px;
+  height: 26px;
+  background: #86827d !important;
+  border: 1px solid #8c8888;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.selectedProductCategory p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #ffffff;
+}
+
+.notAvailableProductCategory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  gap: 10px;
+  width: 54px;
+  height: 26px;
+  border: 1px solid #8c8888;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.notAvailableProductCategory p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #8c8888;
+}
+
+.actionQuantityContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  gap: 10px;
+  width: 27px;
+  height: 26px;
+  border: 1px solid #c9c3c3;
+  border-radius: 6px;
+  background: transparent;
+}
+
+.actionQuantityContainer p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 9px;
+  text-align: center;
+  color: #c9c3c3;
+}
+
+.selectedQuantity {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  color: #c9c3c3;
+}
+
+.spinnerInfoContainer {
+  margin-top: 10px;
+  width: 90%;
+  display: grid;
+  place-items: center;
+}
+
+.spinnerInfoContainer h1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: #dedede;
+}
+
+.spinnerInfoContainer p {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: #999999;
+}
