@@ -4,7 +4,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import styled from "styled-components";
 
 const SpinnerContainer = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

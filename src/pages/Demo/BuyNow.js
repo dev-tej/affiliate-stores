@@ -129,13 +129,17 @@ const BuyNow = (props) => {
     (variant) => variant?.title === selectedVariant
   );
 
+  const ADD_VARIANT_ID = SELECTED_PRODUCT_VARIANTS?.includes("Default Title")
+    ? variants?.[0]?.id
+    : SELECTED_PRODUCT_VARIANT_ID?.id;
+
   const handleBuyNow = () => {
     setLoading(true);
     client.checkout.create().then((checkout) => {
       const checkoutID = checkout?.id;
       const lineItemsToAdd = [
         {
-          variantId: SELECTED_PRODUCT_VARIANT_ID?.id,
+          variantId: ADD_VARIANT_ID,
           quantity: selectedQuantity,
           customAttributes: [],
         },
@@ -157,6 +161,9 @@ const BuyNow = (props) => {
         justifyContent: "flex-start",
         alignItems: "flex-start",
         background: "#11100d",
+        minHeight: "100vh",
+        marginTop: "-150px",
+        position: "absolute",
       }}
     >
       <Spinner loading={loading} />
