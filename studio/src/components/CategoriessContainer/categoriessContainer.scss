@@ -1,0 +1,36 @@
+
+
+.mainScroller{
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding-top: 10px;
+
+    .categoriesContainer{
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+
+        .categoriesimageContainer{
+            overflow: hidden;
+            border-radius: 50%;
+            height: 60px;
+            width: 60px;
+            border: 3px solid #72e2f4;
+            img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+        p{
+            font-size: 10px;
+            white-space: nowrap;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    }
+}
