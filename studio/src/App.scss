@@ -1,0 +1,50 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+img{
+  max-width: 100%;
+}
+.mainContainer{
+  position: relative;
+
+  .bgMain{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    background: linear-gradient(to bottom right,#feedf6,#fcf0e2);
+  }
+
+  .responsiveContainer{
+    position: relative;
+    margin: auto;
+    max-width: 450px;
+    background-color: #f4f4f5;
+    border: 1px solid rgb(228, 228, 228);
+    height: calc(100vh - 30px);
+    margin: 30px auto 0;
+    /*overflow: hidden;*/
+  }
+}
+
+
+.divider{
+  height: 15px;
+}
+
+
+@media only screen and (max-width: 991px){
+  .mainContainer .responsiveContainer{
+    margin-top: 0px;
+  }
+}
+
+
+.buttonToggle{
+  position: absolute;
+  right: 30px;
+  top: 0;
+}

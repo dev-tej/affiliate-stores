@@ -1,0 +1,17 @@
+.bannerScroller{
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    height: 350px;
+
+    .bannerImageContainer{
+        display: contents;
+        img{
+            height: 320px;
+            width: 370px;
+            margin-right: 20px;
+        }
+    }
+}

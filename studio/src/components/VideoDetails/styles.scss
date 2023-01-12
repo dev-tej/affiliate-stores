@@ -1,0 +1,43 @@
+
+.videoDetails{
+    position: relative;
+
+    &.shadow{
+        box-shadow: 1px 90px 35px #1f1f1f3e inset;
+    }
+    &:hover{
+        box-shadow: 1px 90px 35px #1f1f1f3e inset;
+        .textMain{
+            display: block !important;
+        }
+    }
+
+    video{
+        height: calc(100vh - 30px);
+        width: 100%;
+        z-index: 1;
+    }
+
+    .textMain{
+        display: none;
+        z-index: 9;
+        padding: 10px 20px;
+        position: absolute;
+        top: 0;
+        color: #ffffff;
+
+        &.show{
+            display: block;
+        }
+
+        h3{
+            margin: 5px;
+        }
+        p{
+            margin: 5px;
+            font-size: 15px;
+            color: #ffffff;
+        }
+    }
+  
+}

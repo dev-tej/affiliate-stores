@@ -1,0 +1,160 @@
+img{
+    max-width: 100%;
+}
+
+.profileDetails{
+    background-color: #f4f4f5;
+    overflow: scroll;
+    height: calc(100vh - 30px);
+    
+    .profileImageOut{
+        position: relative;
+        color: #ffffff;
+
+        .mainImage{
+            width: 100%;
+            height: 550px;
+        }
+
+        .profileConatiner{
+            position: absolute;
+            bottom: 0;
+            background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
+            width: 100%;
+            .paddingCon{
+                padding: 20px;
+
+            }
+            
+            .personTitleOut{
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                h3{
+                    color: #ffffff;
+                    font-size: 24px;
+                    margin: 0;
+                }
+                span{
+                    font-size: 12px;
+                }
+            }
+        }
+        .profileDes{
+            p{
+                margin: 0;
+            }
+            .followDetails{
+                margin-bottom: 5px;
+                align-items: center;
+                display: flex;
+                .bullet{
+                    font-size: 11px;
+                    margin: 0 10px;
+                    color: #ffffff33;
+                }
+                span{
+                    font-weight: 500;
+                    font-size: 19px;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+
+    .stickyHeader{
+        position: sticky;
+        top: 55px;
+        background-color: white;
+        border-top: 2px solid #f4f4f5;
+        z-index: 0;
+        .optionsOut{
+            display: flex;
+            padding: 3px;
+            .options{
+                color: rgba(0, 0, 0, 0.8);
+                padding: 15px 20px;
+                font-weight: 600;
+                &.active{
+                    color: #ff3f6c;
+                    padding: 15px 20px;
+                    border-bottom: 2px solid #ff3f6c;
+            
+                }
+            }
+        }
+    }
+}
+
+.product-wap--flex-recom {
+    display: flex;
+    flex-wrap: wrap;
+    .recomded-col-wap {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+.product-boxwap-elemnt {
+    border: 0.5px solid #d0d0d0;
+}
+.product-imgrecomded {
+    display: flex;
+    flex-direction: column;
+}
+.recom--discweb-titles {
+    padding: 5px;
+    background-color: #fff;
+}
+.head-product-web {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: #434343;
+    font-weight: 500;
+}
+.short-disc-recom-mn {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 13px;
+    color: #747474;
+    font-weight: 500;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.price-head-wig {
+    display: inline-block;
+    font-size: 14px;
+    color: #434343;
+    font-weight: 500;
+}
+.wishlist--icon {
+    float: right;
+    margin-top: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
