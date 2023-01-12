@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Loader from "components/Loader";
 import { TabItem, TabsContainer, TabsSection } from "./Demo.components";
 import Posts from "./Posts";
@@ -17,6 +18,8 @@ const TabsData = [
 ];
 
 const Categories = () => {
+  const { brand, slug, username } = useParams();
+
   const [selectedTab, setSelectedTab] = useState("posts");
   const [loading, setLoading] = useState(false);
   const [feedData, setFeedData] = useState([]);
@@ -27,7 +30,7 @@ const Categories = () => {
       let fetchFeedData = async () => {
         setLoading(true);
         let result = await axiosInstance.get(
-          `/galleri5/posts/galleri5_test/swagata_dev?page=1`
+          `/${brand}/posts/${slug}/${username}?page=1`
         );
         setFeedData(result?.data);
         setLoading(false);
@@ -37,14 +40,14 @@ const Categories = () => {
       let fetchCollectionsData = async () => {
         setLoading(true);
         let result = await axiosInstance.get(
-          `/galleri5/collections/galleri5_test/swagata_dev`
+          `/${brand}/collections/${slug}/${username}`
         );
         setCollectionsData(result?.data);
         setLoading(false);
       };
       fetchCollectionsData();
     }
-  }, [selectedTab]);
+  }, [selectedTab, brand, slug, username]);
 
   return loading ? (
     <Loader loading={loading} />
