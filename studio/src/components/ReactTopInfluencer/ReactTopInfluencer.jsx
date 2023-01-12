@@ -12,6 +12,7 @@ function ReactTopInfluencer({ RoundedTopInfluencers }) {
           <h2 className="title-h2-head">
             {RoundedTopInfluencers?.details?.title || "Top Influencers"}
           </h2>
+          <h2 className="title-h2-head">View All</h2>
         </div>
         <div className="influice--wrap-items">
           <ReactOwlCarousel

@@ -14,7 +14,7 @@ function LiveStreamComponent({ liveStream }) {
           </h2>
           <span className="view-allstream">
             <button type="button" className="btn-view-all">
-              View All
+              <h2>View All</h2>
             </button>
           </span>
         </div>
