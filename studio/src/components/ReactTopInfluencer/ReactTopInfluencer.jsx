@@ -4,37 +4,7 @@ import "./ReactTopInfluencer.scss";
 import ReactOwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-function ReactTopInfluencer() {
-  const [homeData, setHomeData] = useState([]);
-  const [componentSort, setComponentSort] = useState([]);
-
-  const getHomeData = async () => {
-    var config = {
-      method: "get",
-      url: "https://api.galleri5.co.in/servicer/galleri5/creator-zone/home",
-      headers: {},
-    };
-
-    await axios(config)
-      .then(function (response) {
-        setHomeData(response.data);
-        setComponentSort(response.data.map((val) => val.component));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getHomeData();
-  }, []);
-
-  const RoundedTopInfluencers =
-    (homeData &&
-      homeData.length &&
-      homeData?.filter((item) => item.name === "ROUNDED_IMAGE_CAROUSEL")[0]) ||
-    {};
-
+function ReactTopInfluencer({ RoundedTopInfluencers }) {
   return (
     <div className="top-influence-sect">
       <div className="container-width">

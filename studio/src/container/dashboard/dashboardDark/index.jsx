@@ -10,6 +10,7 @@ import HeaderDark from "../../../components/HeaderDark";
 import ReactTopInfluencer from "../../../components/ReactTopInfluencer/ReactTopInfluencer";
 import LiveStreamComponent from "../../../components/LiveStreamComponent/LiveStreamComponent";
 import PostFeedComponent from "../../../components/PostFeedComponent/PostFeedComponent";
+import ReactTopBanner from "../../../components/ReactTopBanner/ReactTopBanner";
 
 function Homepage2() {
   const [homeData, setHomeData] = useState([]);
@@ -61,38 +62,19 @@ function Homepage2() {
   const profileDetails = profile?.details?.meta[0]?.details;
 
   const RenderBanner = () => {
-    return (
-      <div className="banner-slider-home">
-        <ReactOwlCarousel
-          className="owl-theme"
-          loop={true}
-          autoplayTimeout={100000}
-          autoplay={true}
-          margin={10}
-          nav
-          items="1">
-          {heroBanners?.details?.meta?.map((item, index) => {
-            return (
-              <div className="carausal-image" key={index}>
-                <img src={item?.thumbnail} alt="postImage" />
-              </div>
-            );
-          })}
-        </ReactOwlCarousel>
-      </div>
-    );
+    return <ReactTopBanner heroBanners={heroBanners} />;
   };
 
   const RenderTopInfluencer = () => {
-    return <ReactTopInfluencer />;
+    return <ReactTopInfluencer RoundedTopInfluencers={RoundedTopInfluencers} />;
   };
 
   const RenderLiveStream = () => {
-    return <LiveStreamComponent />;
+    return <LiveStreamComponent liveStream={liveStream} />;
   };
 
   const RenderPost = () => {
-    return <PostFeedComponent />;
+    return <PostFeedComponent profileDetails={profileDetails} />;
   };
 
   const renderSortedArray = () => {
